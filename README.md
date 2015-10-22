@@ -1,1 +1,2 @@
-# PA165-Library
+# PA165 project - Library [![Build Status](https://travis-ci.org/formanek/PA165-Library.svg)](https://travis-ci.org/formanek/PA165-Library)
+See [wiki](https://github.com/formanek/PA165-Library/wiki) for more info.
