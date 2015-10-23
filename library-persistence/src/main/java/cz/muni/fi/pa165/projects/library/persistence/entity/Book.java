@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
 import java.util.Objects;
@@ -12,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * Class that represents Book which can be lent to the Members
@@ -26,20 +22,19 @@ public class Book {
     private Long id;
 
     @NotNull
+    @Pattern(regexp = "^(?=.{13}$)\\d{1,5}([- ])\\d{1,7}\\1\\d{1,6}\\1(\\d|X)$")
     @Column(nullable = false)
     private String isbn;
 
+    @NotNull
+    @Column(nullable = false)
     private String author;
 
+    @NotNull
+    @Column(nullable = false)
     private String title;
 
     public Book() {
-    }
-
-    public Book(Long id) {
-        if (id == null)
-            throw new NullPointerException("Id was null");
-        this.id = id;
     }
 
     public Long getId() {
@@ -59,26 +54,18 @@ public class Book {
     }
 
     public void setId(Long id) {
-        if (id == null)
-            throw new NullPointerException("Id was null");
         this.id = id;
     }
 
     public void setIsbn(String isbn) {
-        notNull(isbn,"ISBN");
-        notEmpty(isbn,"ISBN");
         this.isbn = isbn;
     }
 
     public void setAuthor(String author) {
-        notNull(author, "Author");
-        notEmpty(author,"Author");
         this.author = author;
     }
 
     public void setTitle(String title) {
-        notNull(title,"Title");
-        notEmpty(title,"Title");
         this.title = title;
     }
 
@@ -94,30 +81,11 @@ public class Book {
         }
         if (obj instanceof Book) {
             Book other = (Book) obj;
-            return Objects.equals(getId(), other.getId())
-                    && Objects.equals(getIsbn(), other.getIsbn())
+            return Objects.equals(getIsbn(), other.getIsbn())
                     && Objects.equals(getAuthor(), other.getAuthor())
                     && Objects.equals(getTitle(), other.getTitle());
         }
         return false;
-    }
-    
-    /**
-     * Helper method - it checks whether the arg is null. If it is, it throws NullPointerException
-     * @param arg - String argument which will be checked
-     * @param argName - Name of the argument which will be inserted into exception message
-     */
-    private void notNull(String arg, String argName) {
-        if (arg == null)
-            throw new NullPointerException(argName + " was null.");
-    }
-    /**
-     * Helper method - it checks whether the arg is empty string. If it is, it throws IllegalArgumentException
-     * @param arg - String argument which will be checked
-     * @param argName - Name of the argument which will be inserted into exception message
-     */
-    private void notEmpty(String arg, String argName) {
-        if (arg.trim().equals(""))
-            throw new IllegalArgumentException(argName + " was empty.");
+        
     }
 }
