@@ -55,7 +55,7 @@ public class Member {
         this.givenName = givenName;
     }
 
-    public String getSurame() {
+    public String getSurname() {
         return surname;
     }
 
@@ -81,7 +81,7 @@ public class Member {
         }
         final Member other = (Member) obj;
         return Objects.equals(givenName, other.getGivenName())
-                && Objects.equals(surname, other.getSurame())
+                && Objects.equals(surname, other.getSurname())
                 && Objects.equals(email, other.getEmail());
     }
 
