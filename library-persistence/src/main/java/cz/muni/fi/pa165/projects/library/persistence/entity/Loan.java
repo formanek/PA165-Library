@@ -1,17 +1,8 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Class that represents Loan which can contain multiple Loan items
@@ -28,10 +19,12 @@ public class Loan {
     
     @NotNull
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date loanDate;
     
     @NotNull
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date returnDate;
     
     @NotNull
@@ -40,6 +33,7 @@ public class Loan {
     
     @NotNull
     @Column(nullable = false)
+    @OneToMany(orphanRemoval = true, mappedBy = "loan")
     private Set<LoanItem> loanItems;
     
     public Loan()
