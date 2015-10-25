@@ -45,7 +45,7 @@ public class MemberDaoImpl implements MemberDao {
         if (email.isEmpty()) {
             throw new IllegalArgumentException("email is empty");
         }
-        if (email.contains("@")) {
+        if (!email.contains("@")) {
             throw new IllegalArgumentException("email is not valid");
         }
         List<Member> resultList = em.createQuery("SELECT * FROM members where email = :email", Member.class)
