@@ -1,9 +1,12 @@
 package cz.muni.fi.pa165.projects.library.persistence.dao;
 
+import cz.muni.fi.pa165.projects.library.exceptions.EntityNotFoundException;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -36,15 +39,24 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void delete(Book book) {
+    public void delete(Book book) throws EntityNotFoundException{
+        Objects.requireNonNull(book, "Null book can't be deleted.");
         checkId(book.getId());
-        em.remove(book);
+        try {
+            em.remove(book);
+        } catch (IllegalArgumentException e) {
+            throw new EntityNotFoundException("Book not found, can't remove it.", e);
+        }
     }
 
     @Override
-    public Book findById(Long id) {
+    public Book findById(Long id) throws EntityNotFoundException {
         checkId(id);
-        return em.find(Book.class, id);
+        Book result = em.find(Book.class, id);
+        if (result == null)
+            throw new EntityNotFoundException("Book was not found.");
+        else
+            return result;
     }
 
     @Override
@@ -54,7 +66,11 @@ public class BookDaoImpl implements BookDao {
                 throw new IllegalArgumentException("When Id is not null other fields have to be null");
             }
             List<Book> l = new ArrayList<>();
-            l.add(findById(book.getId()));
+            try {
+                l.add(findById(book.getId()));
+            } catch (EntityNotFoundException ex) {
+                Logger.getLogger(BookDaoImpl.class.getName()).log(Level.SEVERE, "Book not found by id.", ex);
+            }
             return l;
         } else if (book.getAuthor() != null && book.getIsbn() == null && book.getTitle() == null) {
             checkString(book.getAuthor(), "Author");
@@ -111,6 +127,13 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findAll() {
         return em.createQuery("select * from Book", Book.class).getResultList();
     }
+
+    @Override
+    public void update(Book book) {
+        em.merge(book);
+    }
+    
+    
     
     /**
      * Check whether the arg is empty string. If it is, throw InvalidArgumentException 
@@ -137,5 +160,4 @@ public class BookDaoImpl implements BookDao {
             throw new IllegalArgumentException("Id was negative number");
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.projects.library.persistence.dao;
 
+import cz.muni.fi.pa165.projects.library.exceptions.EntityNotFoundException;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import java.util.List;
 
@@ -18,15 +19,17 @@ public interface BookDao {
     /**
      * Delete the book. book.id must be valid id.
      * @param book 
+     * @throws cz.muni.fi.pa165.projects.library.exceptions.EntityNotFoundException 
      */
+    public void delete(Book book) throws EntityNotFoundException;
     
-    public void delete(Book book);
     /**
      * Find the book with the specified id. Id must be valid id.
      * @param id
      * @return  book with the specified id
+     * @throws cz.muni.fi.pa165.projects.library.exceptions.EntityNotFoundException
      */
-    public Book findById(Long id);
+    public Book findById(Long id) throws EntityNotFoundException;
     
     /**
      * Find the books with specified details. If book.id is not null, other attributes
@@ -41,5 +44,11 @@ public interface BookDao {
      * @return all books
      */
     public List<Book> findAll();
+    
+    /**
+     * update persisted book
+     * @param book 
+     */
+    public void update(Book book);
     
 }
