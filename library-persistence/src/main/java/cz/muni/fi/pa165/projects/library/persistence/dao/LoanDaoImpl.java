@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 
 /**
  * Data access object which provides access to Loan entity
  *
  * @author Jan Mosat
  */
+@Repository
 public class LoanDaoImpl implements LoanDao {
     
     @PersistenceContext
@@ -43,13 +45,13 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public List<Loan> allLoansOfMember(Member member) {
         checkId(member.getId());
-        return em.createQuery("select * from Loan where userId = :userId", Loan.class)
+        return em.createQuery("select l from Loan l where userId = :userId", Loan.class)
                 .setParameter("userId", member.getId()).getResultList();        
     }
     
     @Override
     public List<Loan> findAll() {
-        return em.createQuery("select * from Loan", Loan.class).getResultList();
+        return em.createQuery("select l from Loan l", Loan.class).getResultList();
     }
     
     /**

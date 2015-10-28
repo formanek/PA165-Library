@@ -7,10 +7,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author jkaspar
  */
+@Repository
 public class LoanItemDaoImpl implements LoanItemDao {
 
     @PersistenceContext

@@ -22,7 +22,7 @@ public class Book {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^(?=.{13}$)\\d{1,5}([- ])\\d{1,7}\\1\\d{1,6}\\1(\\d|X)$")
+    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$")
     @Column(nullable = false)
     private String isbn;
 

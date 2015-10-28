@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 
 /**
  * Implementation of DAO for library members
  * @author David Formanek
  */
+@Repository
 public class MemberDaoImpl implements MemberDao {
 
     @PersistenceContext

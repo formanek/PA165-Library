@@ -98,6 +98,6 @@ public class Loan {
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanDate, returnDate, userId, loanItems);
+        return Objects.hash(loanDate, returnDate, userId);
     }  
 }

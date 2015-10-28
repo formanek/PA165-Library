@@ -15,12 +15,10 @@ public class LoanItem {
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
-    @OneToMany
+    @OneToOne
     private Book book;
 
     @NotNull
-    @Column(nullable = false)
     @ManyToOne
     private Loan loan;
 
