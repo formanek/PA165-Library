@@ -50,7 +50,7 @@ public class MemberDaoImpl implements MemberDao {
         if (!email.contains("@")) {
             throw new IllegalArgumentException("email is not valid");
         }
-        List<Member> resultList = em.createQuery("SELECT * FROM members where email = :email", Member.class)
+        List<Member> resultList = em.createQuery("SELECT m FROM Member m where email = :email", Member.class)
                 .setParameter("email", email).getResultList();
         if (resultList == null || resultList.isEmpty()) {
             return null;
@@ -63,6 +63,15 @@ public class MemberDaoImpl implements MemberDao {
     
     @Override
     public List<Member> findAll() {
-        return em.createQuery("SELECT * FROM members", Member.class).getResultList();
+        return em.createQuery("SELECT m FROM Member m", Member.class).getResultList();
+    }
+
+    @Override
+    public void update(Member member) {
+        Objects.requireNonNull(member, "null argument member");
+        Objects.requireNonNull(member.getGivenName(), "given name not specified");
+        Objects.requireNonNull(member.getSurname(), "surname not specified");
+        Objects.requireNonNull(member.getEmail(), "email not specified");
+        em.merge(member);
     }
 }

@@ -36,7 +36,13 @@ public interface MemberDao {
     
     /**
      * Finds all persisted library members
-     * @return list of all members
+     * @return list of all members (empty list if there are no members)
      */
     public List<Member> findAll();
+    
+    /**
+     * Updates the specified previously persister library member
+     * @param member specified member
+     */
+    public void update(Member member);
 }
