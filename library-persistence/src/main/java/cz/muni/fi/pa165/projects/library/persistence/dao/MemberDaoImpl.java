@@ -29,15 +29,13 @@ public class MemberDaoImpl implements MemberDao {
     @Override
     public void delete(Member member) {
         Objects.requireNonNull(member, "null argument member");
+        Objects.requireNonNull(member.getId(), "deleting member with null id");
         em.remove(member);
     }
 
     @Override
     public Member findById(Long id) {
         Objects.requireNonNull(id, "id is null");
-        if (id < 0) {
-            throw new IllegalArgumentException("negative id");
-        }
         return em.find(Member.class, id);
     }
 
@@ -50,7 +48,7 @@ public class MemberDaoImpl implements MemberDao {
         if (!email.contains("@")) {
             throw new IllegalArgumentException("email is not valid");
         }
-        List<Member> resultList = em.createQuery("SELECT m FROM Member m where email = :email", Member.class)
+        List<Member> resultList = em.createQuery("SELECT m FROM Member m where m.email = :email", Member.class)
                 .setParameter("email", email).getResultList();
         if (resultList == null || resultList.isEmpty()) {
             return null;

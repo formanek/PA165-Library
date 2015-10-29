@@ -21,50 +21,38 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void create(Loan loan) {
-        Objects.requireNonNull(loan, "Null loan can't be created.");
+        Objects.requireNonNull(loan, "Null loan can't be created");
         Objects.requireNonNull(loan.getLoanDate(), "Loan date must be specified");
         Objects.requireNonNull(loan.getReturnDate(), "Return date must be specified");
         if (loan.getLoanDate().before(loan.getReturnDate())){
-            throw new IllegalArgumentException("Return date mus be aftert Loan date");
+            throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.persist(loan);
     }
 
     @Override
     public void delete(Loan loan) {
-        checkId(loan.getId());
+        Objects.requireNonNull(loan, "Null loan can't be deleted");
+        Objects.requireNonNull(loan.getId(), "Deleting loan with null id");
         em.remove(loan);
     }
 
     @Override
     public Loan findById(Long id) {
-        checkId(id);
+        Objects.requireNonNull(id, "null id");
         return em.find(Loan.class, id);
     }
 
     @Override
     public List<Loan> allLoansOfMember(Member member) {
-        checkId(member.getId());
-        return em.createQuery("select l from Loan l where userId = :userId", Loan.class)
+        Objects.requireNonNull(member, "Member is null");
+        Objects.requireNonNull(member.getId(), "null id");
+        return em.createQuery("select l from Loan l where l.userId = :userId", Loan.class)
                 .setParameter("userId", member.getId()).getResultList();        
     }
     
     @Override
     public List<Loan> findAll() {
         return em.createQuery("select l from Loan l", Loan.class).getResultList();
-    }
-    
-    /**
-     * Check whether the id parameter can be used as an id. If id is null, NullPointerException
-     * is thrown. If id is negative number, IllegalArgumentException is thrown.
-     * @param id 
-     */
-    private void checkId(Long id) {
-        if (id == null) {
-            throw new NullPointerException("Id can not be null");
-        }
-        if (id < 0) {
-            throw new IllegalArgumentException("Id can not be negative number");
-        }
     }
 }

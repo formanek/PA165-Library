@@ -215,11 +215,6 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         assertNull(loanDao.findById(Long.MAX_VALUE));
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void findByInvalidIdTest() {
-        loanDao.findById(Long.MIN_VALUE);
-    }
-
     @Test
     public void findAllBasicTest() {
         assertEquals(loanDao.findAll().size(), 3);
