@@ -23,8 +23,9 @@ public class LoanDaoImpl implements LoanDao {
     public void create(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be created");
         Objects.requireNonNull(loan.getLoanDate(), "Loan date must be specified");
-        Objects.requireNonNull(loan.getReturnDate(), "Return date must be specified");
-        if (loan.getLoanDate().before(loan.getReturnDate())){
+        Objects.requireNonNull(loan.getMember(), "Member must be specified");
+        Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
+        if (loan.getReturnDate() != null && loan.getLoanDate().after(loan.getReturnDate())){
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.persist(loan);
@@ -47,12 +48,24 @@ public class LoanDaoImpl implements LoanDao {
     public List<Loan> allLoansOfMember(Member member) {
         Objects.requireNonNull(member, "Member is null");
         Objects.requireNonNull(member.getId(), "null id");
-        return em.createQuery("select l from Loan l where l.userId = :userId", Loan.class)
-                .setParameter("userId", member.getId()).getResultList();        
+        return em.createQuery("select l from Loan l where l.member = :member", Loan.class)
+                .setParameter("member", member).getResultList();        
     }
     
     @Override
     public List<Loan> findAll() {
         return em.createQuery("select l from Loan l", Loan.class).getResultList();
+    }
+    
+    @Override
+    public void update(Loan loan) {
+        Objects.requireNonNull(loan, "Null loan can't be updated");
+        Objects.requireNonNull(loan.getLoanDate(), "Loan date must be specified");
+        Objects.requireNonNull(loan.getMember(), "Member must be specified");
+        Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
+        if (loan.getReturnDate() != null && loan.getLoanDate().after(loan.getReturnDate())){
+            throw new IllegalArgumentException("Return date must be after Loan date");
+        }
+        em.merge(loan);
     }
 }

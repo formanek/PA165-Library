@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,6 +39,10 @@ public class Member {
     @Column(nullable = false, unique = true)
     @Pattern(regexp = ".+@.+\\...+")
     private String email;
+    
+    @OneToMany(orphanRemoval = true, mappedBy="member")
+    private Set<Loan> loans = new HashSet<>();
+
 
     public Member() {
     }
@@ -69,6 +77,14 @@ public class Member {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public void setLoanItems(Set<Loan> loans) {
+        this.loans = loans;
+    }
+    
+    public Set<Loan> getLoans() {
+        return Collections.unmodifiableSet(loans);
     }
 
     @Override

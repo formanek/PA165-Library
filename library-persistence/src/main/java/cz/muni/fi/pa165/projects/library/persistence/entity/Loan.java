@@ -10,7 +10,6 @@ import java.util.*;
  * @author Jan Mosat
  */
 @Entity
-@Table(name = "loan")
 public class Loan {
     
     @Id
@@ -22,15 +21,14 @@ public class Loan {
     @Temporal(TemporalType.DATE)
     private Date loanDate;
     
-    @NotNull
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date returnDate;
     
     @NotNull
-    @Column(nullable = false)
-    private long userId;
-    
+    /*@Column(nullable = false)*/
+    @ManyToOne
+    private Member member;
+
     @NotNull
     @Column(nullable = false)
     @OneToMany(orphanRemoval = true, mappedBy = "loan")
@@ -38,9 +36,16 @@ public class Loan {
     
     public Loan()
     {
-        loanItems = new HashSet<>();
+    }
+    
+    public Member getMember() {
+        return member;
     }
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -65,14 +70,6 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public Set<LoanItem> getLoanItems() {
         return Collections.unmodifiableSet(loanItems);
     }
@@ -92,12 +89,11 @@ public class Loan {
         final Loan other = (Loan) obj;
         return Objects.equals(loanDate, other.getLoanDate())
                 && Objects.equals(returnDate, other.getReturnDate())
-                && Objects.equals(userId, other.getUserId())
-                && Objects.equals(loanItems, other.getLoanItems());
+                && Objects.equals(member, other.getMember());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanDate, returnDate, userId);
+        return Objects.hash(loanDate, returnDate, member);
     }  
 }

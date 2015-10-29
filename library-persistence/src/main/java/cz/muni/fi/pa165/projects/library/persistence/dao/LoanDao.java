@@ -11,30 +11,35 @@ import java.util.Collection;
  */
 public interface LoanDao {
     /**
-     * Creates new loan in database
-     * @param loan to be created
+     * Persists loan in database. All loans attributes except returnDate and id must be specified
+     * @param loan to be persisted
      */
     public void create(Loan loan);
     /**
-     * Deletes loan from database
+     * Deletes loan
      * @param loan to be deleted
      */
     public void delete(Loan loan);
     /**
-     * Returns loan with specified Id from database
+     * Returns loan with specified Id from database if id is valid
      * @param id of loan to be returned
-     * @return loan with specified Id
+     * @return loan with specified Id or null if non existent
      */
     public Loan findById(Long id);
     /**
-     * Returns all loans for specified member from database
+     * Returns all loans for specified member if member is valid
      * @param member for witch loans should be returned 
-     * @return all loans for specified member
+     * @return all loans for specified member (empty list if specified member is not persisted)
      */
     public Collection<Loan> allLoansOfMember(Member member);
     /**
-     * Returns all loans from database
-     * @return all loans
+     * Returns all persisted loans
+     * @return all loans (empty list if none are persisted)
      */
     public Collection<Loan> findAll();
+    /**
+     * Updates specified persisted loan
+     * @param loan to be updated
+     */
+    public void update(Loan loan);
 }

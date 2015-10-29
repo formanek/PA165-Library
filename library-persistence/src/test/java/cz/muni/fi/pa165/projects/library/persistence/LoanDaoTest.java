@@ -67,45 +67,33 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         m1.setEmail("effective@java.com");
         memberDao.create(m1);
 
-        //l1 has not been returned yet -> return date is null
         l1 = new Loan();
         l1.setLoanItems(items1);
         Calendar c = Calendar.getInstance();
         c.set(2015, 1, 27);
         l1.setLoanDate(c.getTime());
         
-        //delete following two lines after LoanDaoImpl is fixed.
-        c.set(2014, 1, 28);
-        l1.setReturnDate(c.getTime());
         
-        //replace following line with the next comment
-        l1.setUserId(Long.valueOf(1));
-        //l1.setMember(m);
+        l1.setMember(m1);
 
         l2 = new Loan();
         l2.setLoanItems(items2);
         c.set(2015, 2, 25);
         l2.setLoanDate(c.getTime());
-        //change year after LoanDaoImpl is fixed
-        c.set(2014, 2, 27);
+        c.set(2016, 2, 27);
         l2.setReturnDate(c.getTime());
         
-        //replace following line with the next comment
-        l2.setUserId(Long.valueOf(2));
-        //l2.setMember(m);
+        l2.setMember(m1);
 
         l3 = new Loan();
         l3.setLoanItems(items3);
         c.set(2015, 3, 24);
         l3.setLoanDate(c.getTime());
         
-        //change year after LoanDaoImpl is fixed
-        c.set(2014, 3, 25);
+        c.set(2016, 3, 25);
         l3.setReturnDate(c.getTime());
         
-        //replace following line with the next comment
-        l3.setUserId(Long.valueOf(3));
-        //l3.setMember(m);
+        l3.setMember(m1);
 
         loanDao.create(l1);
         loanDao.create(l2);
@@ -140,7 +128,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         return set;
     }
 
-    //@Test
+    @Test
     public void createLoanBasicTest() {
         Set<LoanItem> items4 = createLoanItems(1);
         Calendar c = Calendar.getInstance();
@@ -148,8 +136,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         l4.setLoanItems(items4);
         c.set(2015, 4, 24);
         l4.setLoanDate(c.getTime());
-        l4.setUserId(Long.valueOf(4));
-        c.set(2015, 4, 25);
+        l4.setMember(m1);
         l4.setReturnDate(c.getTime());
 
         int countBefore = loanDao.findAll().size();
@@ -162,24 +149,21 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(null);
     }
 
-    //@Test(expectedExceptions = {NullPointerException.class})
+    @Test(expectedExceptions = {NullPointerException.class})
     public void createLoanWithNullLoanItemsTest() {
         Loan l = new Loan();
-        l.setLoanDate(l1.getLoanDate());
-        l.setReturnDate(l1.getReturnDate());
-        l.setUserId(123);
+        l.setLoanDate(l2.getLoanDate());
+        l.setReturnDate(l2.getReturnDate());
+        l.setMember(m1);
         loanDao.create(l);
     }
 
-    //@Test(expectedExceptions = {NullPointerException.class})
+    @Test(expectedExceptions = {NullPointerException.class})
     public void createLoanWithNullMemberTest() {
         Loan l = new Loan();
         l.setLoanDate(l1.getLoanDate());
         l.setReturnDate(l1.getReturnDate());
         l.setLoanItems(l1.getLoanItems());
-        //delete this line after long userId is replaced with Member member
-        l.setUserId(-1);
-
         loanDao.create(l);
     }
 
@@ -188,26 +172,24 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan l = new Loan();
         l.setReturnDate(l1.getReturnDate());
         l.setLoanItems(l1.getLoanItems());
-        l.setUserId(123);
+        l.setMember(m1);
         loanDao.create(l);
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void createLoanWithBadReturnDate() {
         Loan l = new Loan();
-        l.setLoanDate(l1.getReturnDate());
-        l.setReturnDate(l1.getLoanDate());
-        l.setLoanItems(l1.getLoanItems());
-        l.setUserId(123);
+        l.setLoanDate(l2.getReturnDate());
+        l.setReturnDate(l2.getLoanDate());
+        l.setLoanItems(l2.getLoanItems());
+        l.setMember(m1);
         loanDao.create(l);
     }
 
     @Test
     public void findByIdBasicTest() {
         Loan result = loanDao.findById(l1.getId());
-        //strange behaviour:
-        //both objects seem to be the same at this moment, but assertEquals return false
-        //assertEquals(result, l1);
+        assertEquals(result, l1);
     }
 
     @Test
@@ -218,18 +200,14 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findAllBasicTest() {
         assertEquals(loanDao.findAll().size(), 3);
-        /*
-        uncomment these lines after long id is replaced with Member member
         assertTrue(loanDao.findAll().contains(l1));
         assertTrue(loanDao.findAll().contains(l2));
-        assertTrue(loanDao.findAll().contains(l3));*/
+        assertTrue(loanDao.findAll().contains(l3));
     }
 
     @Test
     public void allLoansOfMemberBasicTest() {
-        //replace following line with the next comment after long id is replaced with Member member
-        assertEquals(loanDao.allLoansOfMember(m1).size(), 1);
-        //assertEquals(loanDao.allLoansOfMember(m1).size(), 3);
+        assertEquals(loanDao.allLoansOfMember(m1).size(), 3);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
@@ -246,7 +224,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.allLoansOfMember(m2);
     }
 
-    //@Test
+    @Test
     public void allLoansOfMemberAfterNewLoanWasAddedTest() {
         Collection<Loan> col = loanDao.allLoansOfMember(m1);
 
@@ -256,9 +234,10 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         l4.setLoanItems(items4);
         c.set(2015, 4, 24);
         l4.setLoanDate(c.getTime());
-        l4.setUserId(Long.valueOf(4));
+        l4.setMember(m1);
         c.set(2015, 4, 25);
         l4.setReturnDate(c.getTime());
+        assertTrue(l4.getLoanDate().before(l4.getReturnDate()));
         loanDao.create(l4);
 
         Collection<Loan> col2 = loanDao.allLoansOfMember(m1);
@@ -267,57 +246,56 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void updateBasicTest() {
-        //loanDao.update(l1);
+        loanDao.update(l1);
         Calendar c = Calendar.getInstance();
         c.set(2011,1,20);
         l1.setLoanDate(c.getTime());
-        //loanDao.update(l1);
+        loanDao.update(l1);
     }
     
-    //@Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void updateWithNullTest() {
-        //loanDao.update(null);
+        loanDao.update(null);
     }
 
-    //@Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithWrongLoanDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2020,1,20);
-        l1.setLoanDate(c.getTime());
-        //loanDao.update(l1);
+        l2.setLoanDate(c.getTime());
+        loanDao.update(l2);
     }
     
-    //@Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithWrongReturnDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2011,1,20);
         l1.setReturnDate(c.getTime());
-        //loanDao.update(l1);
+        loanDao.update(l1);
     }
     
-    //@Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void updateWithNullMemberTest() {
-        //replace with l1.setMember(null) after long id attribute is replaced with Member member;
-        l1.setUserId(-1);
-        //loanDao.update(l1);
+        l1.setMember(null);
+        loanDao.update(l1);
     }
     
-    //@Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void updateWithNullLoanItemsTest() {
        l1.setLoanItems(null);
-       //loanDao.update(l1);
+       loanDao.update(l1);
     }
     
-    //@Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void updateWithNullLoanDateTest() {
         l1.setLoanDate(null);
-        //loanDao.update(l1);
+        loanDao.update(l1);
     }
     
-    //@Test
+    @Test
     public void updateWithNullReturnDateTest() {
         l1.setReturnDate(null);
-        //loanDao.update(l1);
+        loanDao.update(l1);
     }
     
     @Test
