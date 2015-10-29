@@ -15,7 +15,7 @@ public class LoanItem {
     private Long id;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Book book;
 
     @NotNull
