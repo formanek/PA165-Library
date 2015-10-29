@@ -97,8 +97,8 @@ public class Member {
         }
         final Member other = (Member) obj;
         return Objects.equals(getGivenName(), other.getGivenName())
-                && Objects.equals(other.getSurname(), other.getSurname())
-                && Objects.equals(other.getEmail(), other.getEmail());
+                && Objects.equals(getSurname(), other.getSurname())
+                && Objects.equals(getEmail(), other.getEmail());
     }
 
     @Override
