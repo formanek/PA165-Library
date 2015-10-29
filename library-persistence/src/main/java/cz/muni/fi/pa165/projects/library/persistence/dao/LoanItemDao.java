@@ -23,6 +23,12 @@ public interface LoanItemDao {
     public void delete(LoanItem loanItem);
 
     /**
+     * Update persisted LoanItem
+     * @param loanItem
+     */
+    public void update(LoanItem loanItem);
+
+    /**
      * Find LoanItem by his id
      * @param id
      * @return LoanItem with given id

@@ -2,11 +2,12 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
-import java.util.List;
-import java.util.Objects;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author jkaspar
@@ -19,6 +20,7 @@ public class LoanItemDaoImpl implements LoanItemDao {
 
     @Override
     public void create(LoanItem loanItem) {
+        Objects.requireNonNull(loanItem, "Loan item is not specified");
         Objects.requireNonNull(loanItem.getBook(), "Book is not specified");
         Objects.requireNonNull(loanItem.getLoan(), "Loan is not specified");
         em.persist(loanItem);
@@ -27,8 +29,16 @@ public class LoanItemDaoImpl implements LoanItemDao {
     @Override
     public void delete(LoanItem loanItem) {
         Objects.requireNonNull(loanItem, "Loan item is not specified");
-        Objects.requireNonNull(loanItem.getId(), "Loan item id is not specified");
+//        Objects.requireNonNull(loanItem.getId(), "Loan item id is not specified");
         em.remove(loanItem);
+    }
+
+    @Override
+    public void update(LoanItem loanItem) {
+        Objects.requireNonNull(loanItem, "Loan item is not specified");
+        Objects.requireNonNull(loanItem.getBook(), "Book is not specified");
+        Objects.requireNonNull(loanItem.getLoan(), "Loan is not specified");
+        em.merge(loanItem);
     }
 
     @Override
