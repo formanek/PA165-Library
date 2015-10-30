@@ -86,6 +86,5 @@ public class Book {
                     && Objects.equals(getTitle(), other.getTitle());
         }
         return false;
-        
     }
 }

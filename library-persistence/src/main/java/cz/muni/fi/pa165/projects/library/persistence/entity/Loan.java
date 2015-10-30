@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-
 /**
  * Class that represents Loan which can contain multiple Loan items
  *
@@ -21,17 +20,17 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class Loan {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotNull
-    @Column(nullable = false,unique=true)
+    @Column(nullable = false, unique = true)
     private Timestamp loanTimestamp;
-    
+
     private Timestamp returnTimestamp;
-    
+
     @NotNull
     @ManyToOne
     private Member member;
@@ -40,11 +39,10 @@ public class Loan {
     @Column(nullable = false)
     @OneToMany(orphanRemoval = true, mappedBy = "loan")
     private Set<LoanItem> loanItems;
-    
-    public Loan()
-    {
+
+    public Loan() {
     }
-    
+
     public Member getMember() {
         return member;
     }
@@ -52,7 +50,7 @@ public class Loan {
     public void setMember(Member member) {
         this.member = member;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -84,7 +82,7 @@ public class Loan {
     public void setLoanItems(Set<LoanItem> loanItems) {
         this.loanItems = loanItems;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -94,13 +92,13 @@ public class Loan {
             return false;
         }
         final Loan other = (Loan) obj;
-        return Objects.equals(loanTimestamp, other.getLoanTimestamp())
-                && Objects.equals(returnTimestamp, other.getReturnTimestamp())
-                && Objects.equals(member, other.getMember());
+        return Objects.equals(getLoanTimestamp(), other.getLoanTimestamp())
+                && Objects.equals(getReturnTimestamp(), other.getReturnTimestamp())
+                && Objects.equals(getMember(), other.getMember());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanTimestamp, returnTimestamp, member);
-    }  
+        return Objects.hash(getLoanTimestamp(), getReturnTimestamp(), getMember());
+    }
 }

@@ -4,20 +4,20 @@ import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.projects.library.persistence.dao.MemberDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
-
-import static org.testng.Assert.*;
-
 /**
- * @author jkaspar
+ * @author Jaroslav Kaspar
  */
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
@@ -45,7 +45,6 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     // Create tests
-
     @Test(expectedExceptions = NullPointerException.class)
     public void createMemberNullParameter() throws Exception {
         memberDao.create(null);
@@ -85,7 +84,6 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     // Delete tests
-
     @Test(expectedExceptions = NullPointerException.class)
     public void deleteMemberNullParameter() throws Exception {
         memberDao.delete(null);
@@ -103,7 +101,6 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     // Update tests
-
     @Test(expectedExceptions = NullPointerException.class)
     public void updateMemberNullParameter() throws Exception {
         memberDao.update(null);
@@ -155,7 +152,6 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     // Find tests
-
     @Test(expectedExceptions = NullPointerException.class)
     public void findMemberByIdNullParameter() throws Exception {
         memberDao.findById(null);

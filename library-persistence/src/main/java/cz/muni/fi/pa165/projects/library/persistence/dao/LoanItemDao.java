@@ -2,49 +2,53 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
-
 import java.util.List;
 
 /**
- * @author jkaspar
+ * @author Jaroslav Kaspar
  */
 public interface LoanItemDao {
 
     /**
-     * Persis new LoanItem into persistence context
-     * @param loanItem
+     * Persists new LoanItem into persistence context
+     *
+     * @param loanItem item to be created
      */
     public void create(LoanItem loanItem);
 
     /**
-     * Remove LoanItem from persistence context
-     * @param loanItem
+     * Removes LoanItem from persistence context
+     *
+     * @param loanItem item to be deleted
      */
     public void delete(LoanItem loanItem);
 
     /**
-     * Update persisted LoanItem
-     * @param loanItem
+     * Updates persisted LoanItem
+     *
+     * @param loanItem item to be updated
      */
     public void update(LoanItem loanItem);
 
     /**
-     * Find LoanItem by his id
-     * @param id
-     * @return LoanItem with given id
+     * Finds LoanItem by his id
+     *
+     * @param id the specified id
+     * @return LoanItem with given id or null if not found
      */
     public LoanItem findById(Long id);
 
     /**
-     * Find all LoanItems which belongs to given loan
-     * @param loan
+     * Finds all LoanItems which belongs to given loan
+     *
+     * @param loan the given loan
      * @return list of LoanItems
      */
     public List<LoanItem> findByLoan(Loan loan);
 
-
     /**
-     * Find all LoanItems from the database
+     * Finds all LoanItems from the database
+     *
      * @return list of all LoanItems
      */
     public List<LoanItem> findAll();

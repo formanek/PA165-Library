@@ -19,11 +19,13 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import static org.testng.Assert.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -308,11 +310,5 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = NullPointerException.class)
     public void deleteNullTest() {
         loanDao.delete(null);
-    }
-    
-    @Test(expectedExceptions = NullPointerException.class)
-    public void deleteBadIdTest() {
-        l1.setId(null);
-        loanDao.delete(l1);
     }
 }

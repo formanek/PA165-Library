@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Implementation of DAO for library members
+ *
  * @author David Formanek
  */
 @Named
@@ -16,7 +17,7 @@ public class MemberDaoImpl implements MemberDao {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public void create(Member member) {
         Objects.requireNonNull(member, "null argument member");
@@ -29,7 +30,7 @@ public class MemberDaoImpl implements MemberDao {
     @Override
     public void delete(Member member) {
         Objects.requireNonNull(member, "null argument member");
-        Objects.requireNonNull(member.getId(), "deleting member with null id");
+        //Objects.requireNonNull(member.getId(), "deleting member with null id");
         em.remove(member);
     }
 
@@ -58,7 +59,7 @@ public class MemberDaoImpl implements MemberDao {
         }
         return resultList.get(0);
     }
-    
+
     @Override
     public List<Member> findAll() {
         return em.createQuery("SELECT m FROM Member m", Member.class).getResultList();

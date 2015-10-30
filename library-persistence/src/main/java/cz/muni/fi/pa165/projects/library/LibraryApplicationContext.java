@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.projects.library;
 
-import cz.muni.fi.pa165.projects.library.persistence.dao.MemberDao;
 import javax.sql.DataSource;
-
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

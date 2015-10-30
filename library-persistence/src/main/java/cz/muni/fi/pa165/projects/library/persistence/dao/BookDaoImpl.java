@@ -34,7 +34,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public void delete(Book book) {
         Objects.requireNonNull(book, "Null book can't be deleted.");
-        Objects.requireNonNull(book.getId(), "null id");
+        //Objects.requireNonNull(book.getId(), "null id");
         em.remove(book);
     }
 
@@ -123,7 +123,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     /**
-     * Check whether the arg is empty string. If it is, throw InvalidArgumentException where argName
+     * Check whether the arg is empty string. If it is, throw IllegalArgumentException where argName
      * is used in the error message.
      *
      * @param arg

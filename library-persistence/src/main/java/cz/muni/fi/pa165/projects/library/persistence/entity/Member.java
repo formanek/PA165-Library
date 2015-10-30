@@ -20,11 +20,11 @@ import javax.validation.constraints.Pattern;
  * @author David Formanek
  */
 @Entity
-@Table(name = "members")
+@Table(name = "members") // because "member" is a keyword
 public class Member {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -39,10 +39,9 @@ public class Member {
     @Column(nullable = false, unique = true)
     @Pattern(regexp = ".+@.+\\...+")
     private String email;
-    
-    @OneToMany(orphanRemoval = true, mappedBy="member")
-    private Set<Loan> loans = new HashSet<>();
 
+    @OneToMany(orphanRemoval = true, mappedBy = "member")
+    private Set<Loan> loans = new HashSet<>();
 
     public Member() {
     }
@@ -78,11 +77,11 @@ public class Member {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public void setLoans(Set<Loan> loans) {
         this.loans = loans;
     }
-    
+
     public Set<Loan> getLoans() {
         return Collections.unmodifiableSet(loans);
     }
@@ -103,6 +102,6 @@ public class Member {
 
     @Override
     public int hashCode() {
-        return Objects.hash(givenName, surname, email);
+        return Objects.hash(getGivenName(), getSurname(), getEmail());
     }
 }

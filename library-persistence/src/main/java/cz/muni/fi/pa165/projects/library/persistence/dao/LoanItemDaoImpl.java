@@ -2,15 +2,14 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- * @author jkaspar
+ * @author Jaroslav Kaspar
  */
 @Named
 public class LoanItemDaoImpl implements LoanItemDao {
@@ -29,7 +28,7 @@ public class LoanItemDaoImpl implements LoanItemDao {
     @Override
     public void delete(LoanItem loanItem) {
         Objects.requireNonNull(loanItem, "Loan item is not specified");
-//        Objects.requireNonNull(loanItem.getId(), "Loan item id is not specified");
+        //Objects.requireNonNull(loanItem.getId(), "Loan item id is not specified");
         em.remove(loanItem);
     }
 
@@ -50,6 +49,7 @@ public class LoanItemDaoImpl implements LoanItemDao {
     @Override
     public List<LoanItem> findByLoan(Loan loan) {
         Objects.requireNonNull(loan, "Loan was null");
+        Objects.requireNonNull(loan.getId(), "Loan id was null");
         return em.createQuery("SELECT l FROM LoanItem l WHERE l.loan = :loanid", LoanItem.class)
                 .setParameter("loanid", loan)
                 .getResultList();

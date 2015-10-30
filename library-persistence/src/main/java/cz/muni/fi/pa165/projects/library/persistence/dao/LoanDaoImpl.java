@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  */
 @Named
 public class LoanDaoImpl implements LoanDao {
-    
+
     @PersistenceContext
     private EntityManager em;
 
@@ -25,7 +25,7 @@ public class LoanDaoImpl implements LoanDao {
         Objects.requireNonNull(loan.getLoanTimestamp(), "Loan date must be specified");
         Objects.requireNonNull(loan.getMember(), "Member must be specified");
         Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
-        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())){
+        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())) {
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.persist(loan);
@@ -34,7 +34,7 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void delete(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be deleted");
-        Objects.requireNonNull(loan.getId(), "Deleting loan with null id");
+        //Objects.requireNonNull(loan.getId(), "Deleting loan with null id");
         em.remove(loan);
     }
 
@@ -49,21 +49,21 @@ public class LoanDaoImpl implements LoanDao {
         Objects.requireNonNull(member, "Member is null");
         Objects.requireNonNull(member.getId(), "null id");
         return em.createQuery("select l from Loan l where l.member = :member", Loan.class)
-                .setParameter("member", member).getResultList();        
+                .setParameter("member", member).getResultList();
     }
-    
+
     @Override
     public List<Loan> findAll() {
         return em.createQuery("select l from Loan l", Loan.class).getResultList();
     }
-    
+
     @Override
     public void update(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be updated");
         Objects.requireNonNull(loan.getLoanTimestamp(), "Loan date must be specified");
         Objects.requireNonNull(loan.getMember(), "Member must be specified");
         Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
-        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())){
+        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())) {
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.merge(loan);

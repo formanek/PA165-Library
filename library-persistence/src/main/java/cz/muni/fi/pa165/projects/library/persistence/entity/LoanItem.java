@@ -1,17 +1,25 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
- * @author jkaspar
+ * Represents an item in a loan
+ *
+ * @author Jaroslav Kaspar
  */
 @Entity
 public class LoanItem {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -73,11 +81,15 @@ public class LoanItem {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LoanItem)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof LoanItem)) {
+            return false;
+        }
         LoanItem loanItem = (LoanItem) o;
-        return Objects.equals(getBook(), loanItem.getBook()) &&
-                Objects.equals(getLoan(), loanItem.getLoan());
+        return Objects.equals(getBook(), loanItem.getBook())
+                && Objects.equals(getLoan(), loanItem.getLoan());
     }
 
     @Override
