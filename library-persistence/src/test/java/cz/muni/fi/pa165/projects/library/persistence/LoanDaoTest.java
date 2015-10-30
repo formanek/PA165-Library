@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
@@ -71,7 +72,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         l1.setLoanItems(items1);
         Calendar c = Calendar.getInstance();
         c.set(2015, 1, 27);
-        l1.setLoanDate(c.getTime());
+        l1.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         
         
         l1.setMember(m1);
@@ -79,19 +80,19 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         l2 = new Loan();
         l2.setLoanItems(items2);
         c.set(2015, 2, 25);
-        l2.setLoanDate(c.getTime());
+        l2.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         c.set(2016, 2, 27);
-        l2.setReturnDate(c.getTime());
+        l2.setReturnTimestamp(new Timestamp(c.getTimeInMillis()));
         
         l2.setMember(m1);
 
         l3 = new Loan();
         l3.setLoanItems(items3);
         c.set(2015, 3, 24);
-        l3.setLoanDate(c.getTime());
+        l3.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         
         c.set(2016, 3, 25);
-        l3.setReturnDate(c.getTime());
+        l3.setReturnTimestamp(new Timestamp(c.getTimeInMillis()));
         
         l3.setMember(m1);
 
@@ -135,9 +136,9 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan l4 = new Loan();
         l4.setLoanItems(items4);
         c.set(2015, 4, 24);
-        l4.setLoanDate(c.getTime());
+        l4.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         l4.setMember(m1);
-        l4.setReturnDate(c.getTime());
+        l4.setReturnTimestamp(new Timestamp(c.getTimeInMillis()));
 
         int countBefore = loanDao.findAll().size();
         loanDao.create(l4);
@@ -152,8 +153,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     public void createLoanWithNullLoanItemsTest() {
         Loan l = new Loan();
-        l.setLoanDate(l2.getLoanDate());
-        l.setReturnDate(l2.getReturnDate());
+        l.setLoanTimestamp(l2.getLoanTimestamp());
+        l.setReturnTimestamp(l2.getReturnTimestamp());
         l.setMember(m1);
         loanDao.create(l);
     }
@@ -161,8 +162,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     public void createLoanWithNullMemberTest() {
         Loan l = new Loan();
-        l.setLoanDate(l1.getLoanDate());
-        l.setReturnDate(l1.getReturnDate());
+        l.setLoanTimestamp(l1.getLoanTimestamp());
+        l.setReturnTimestamp(l1.getReturnTimestamp());
         l.setLoanItems(l1.getLoanItems());
         loanDao.create(l);
     }
@@ -170,7 +171,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     public void createLoanWithNullLoanDateTest() {
         Loan l = new Loan();
-        l.setReturnDate(l1.getReturnDate());
+        l.setReturnTimestamp(l1.getReturnTimestamp());
         l.setLoanItems(l1.getLoanItems());
         l.setMember(m1);
         loanDao.create(l);
@@ -179,8 +180,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void createLoanWithBadReturnDate() {
         Loan l = new Loan();
-        l.setLoanDate(l2.getReturnDate());
-        l.setReturnDate(l2.getLoanDate());
+        l.setLoanTimestamp(l2.getReturnTimestamp());
+        l.setReturnTimestamp(l2.getLoanTimestamp());
         l.setLoanItems(l2.getLoanItems());
         l.setMember(m1);
         loanDao.create(l);
@@ -233,11 +234,11 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan l4 = new Loan();
         l4.setLoanItems(items4);
         c.set(2015, 4, 24);
-        l4.setLoanDate(c.getTime());
+        l4.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         l4.setMember(m1);
         c.set(2015, 4, 25);
-        l4.setReturnDate(c.getTime());
-        assertTrue(l4.getLoanDate().before(l4.getReturnDate()));
+        l4.setReturnTimestamp(new Timestamp(c.getTimeInMillis()));
+        assertTrue(l4.getLoanTimestamp().before(l4.getReturnTimestamp()));
         loanDao.create(l4);
 
         Collection<Loan> col2 = loanDao.allLoansOfMember(m1);
@@ -249,7 +250,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.update(l1);
         Calendar c = Calendar.getInstance();
         c.set(2011,1,20);
-        l1.setLoanDate(c.getTime());
+        l1.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         loanDao.update(l1);
     }
     
@@ -262,7 +263,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     public void updateWithWrongLoanDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2020,1,20);
-        l2.setLoanDate(c.getTime());
+        l2.setLoanTimestamp(new Timestamp(c.getTimeInMillis()));
         loanDao.update(l2);
     }
     
@@ -270,7 +271,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     public void updateWithWrongReturnDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2011,1,20);
-        l1.setReturnDate(c.getTime());
+        l1.setReturnTimestamp(new Timestamp(c.getTimeInMillis()));
         loanDao.update(l1);
     }
     
@@ -288,13 +289,13 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test(expectedExceptions = NullPointerException.class)
     public void updateWithNullLoanDateTest() {
-        l1.setLoanDate(null);
+        l1.setLoanTimestamp(null);
         loanDao.update(l1);
     }
     
     @Test
     public void updateWithNullReturnDateTest() {
-        l1.setReturnDate(null);
+        l1.setReturnTimestamp(null);
         loanDao.update(l1);
     }
     

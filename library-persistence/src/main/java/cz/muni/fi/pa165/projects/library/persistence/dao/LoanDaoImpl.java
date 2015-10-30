@@ -22,10 +22,10 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void create(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be created");
-        Objects.requireNonNull(loan.getLoanDate(), "Loan date must be specified");
+        Objects.requireNonNull(loan.getLoanTimestamp(), "Loan date must be specified");
         Objects.requireNonNull(loan.getMember(), "Member must be specified");
         Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
-        if (loan.getReturnDate() != null && loan.getLoanDate().after(loan.getReturnDate())){
+        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())){
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.persist(loan);
@@ -60,10 +60,10 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void update(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be updated");
-        Objects.requireNonNull(loan.getLoanDate(), "Loan date must be specified");
+        Objects.requireNonNull(loan.getLoanTimestamp(), "Loan date must be specified");
         Objects.requireNonNull(loan.getMember(), "Member must be specified");
         Objects.requireNonNull(loan.getLoanItems(), "Loan items must be specified");
-        if (loan.getReturnDate() != null && loan.getLoanDate().after(loan.getReturnDate())){
+        if (loan.getReturnTimestamp() != null && loan.getLoanTimestamp().after(loan.getReturnTimestamp())){
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.merge(loan);

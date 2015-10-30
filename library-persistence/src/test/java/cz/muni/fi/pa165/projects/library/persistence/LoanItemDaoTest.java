@@ -10,8 +10,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
-import java.util.Collections;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -102,7 +101,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
         loanItem2.setConditionBefore(BookCondition.FAIR);
         
         loan1 = new Loan();
-        loan1.setLoanDate(new Date());
+        loan1.setLoanTimestamp(Timestamp.valueOf("2014-10-23 10:10:10.0"));
         loan1.setMember(member1);
         loan1.setLoanItems(items1);
         
@@ -135,7 +134,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
         loanItem3.setConditionBefore(BookCondition.VERY_GOOD);
         
         loan2 = new Loan();
-        loan2.setLoanDate(new Date());
+        loan2.setLoanTimestamp(Timestamp.valueOf("2015-09-23 10:10:10.0"));
         loan2.setMember(member1);
         loan2.setLoanItems(items2);
         
@@ -217,7 +216,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
     {
         Loan loan = new Loan();
         loan.setMember(member1);
-        loan.setLoanDate(new Date());
+        loan.setLoanTimestamp(loan1.getLoanTimestamp());
         loan.setLoanItems(new HashSet<LoanItem>());
         loanItemDao.findByLoan(loan);
     }
@@ -308,7 +307,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
         LoanItem item = new LoanItem();
         item.setBook(book4);
         item.setConditionBefore(BookCondition.VERY_GOOD);
-        loan.setLoanDate(new Date());
+        loan.setLoanTimestamp(loan.getLoanTimestamp());
         loan.setMember(member1);
         loan.setLoanItems(loanItems);
         

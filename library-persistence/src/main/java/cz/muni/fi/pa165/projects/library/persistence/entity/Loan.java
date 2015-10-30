@@ -1,8 +1,18 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
-import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+
 
 /**
  * Class that represents Loan which can contain multiple Loan items
@@ -17,15 +27,12 @@ public class Loan {
     private Long id;
     
     @NotNull
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date loanDate;
+    @Column(nullable = false,unique=true)
+    private Timestamp loanTimestamp;
     
-    @Temporal(TemporalType.DATE)
-    private Date returnDate;
+    private Timestamp returnTimestamp;
     
     @NotNull
-    /*@Column(nullable = false)*/
     @ManyToOne
     private Member member;
 
@@ -54,20 +61,20 @@ public class Loan {
         this.id = id;
     }
 
-    public Date getLoanDate() {
-        return loanDate;
+    public Timestamp getLoanTimestamp() {
+        return loanTimestamp;
     }
 
-    public void setLoanDate(Date loanDate) {
-        this.loanDate = loanDate;
+    public void setLoanTimestamp(Timestamp loanTimestamp) {
+        this.loanTimestamp = loanTimestamp;
     }
 
-    public Date getReturnDate() {
-        return returnDate;
+    public Timestamp getReturnTimestamp() {
+        return returnTimestamp;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public void setReturnTimestamp(Timestamp returnTimestamp) {
+        this.returnTimestamp = returnTimestamp;
     }
 
     public Set<LoanItem> getLoanItems() {
@@ -87,13 +94,13 @@ public class Loan {
             return false;
         }
         final Loan other = (Loan) obj;
-        return Objects.equals(loanDate, other.getLoanDate())
-                && Objects.equals(returnDate, other.getReturnDate())
+        return Objects.equals(loanTimestamp, other.getLoanTimestamp())
+                && Objects.equals(returnTimestamp, other.getReturnTimestamp())
                 && Objects.equals(member, other.getMember());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanDate, returnDate, member);
+        return Objects.hash(loanTimestamp, returnTimestamp, member);
     }  
 }
