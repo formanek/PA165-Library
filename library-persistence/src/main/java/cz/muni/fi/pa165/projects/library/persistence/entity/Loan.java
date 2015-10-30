@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.projects.library.persistence.entity;
 
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -38,7 +39,7 @@ public class Loan {
     @NotNull
     @Column(nullable = false)
     @OneToMany(orphanRemoval = true, mappedBy = "loan")
-    private Set<LoanItem> loanItems;
+    private Set<LoanItem> loanItems = new HashSet<>();
 
     public Loan() {
     }
@@ -60,19 +61,19 @@ public class Loan {
     }
 
     public Timestamp getLoanTimestamp() {
-        return loanTimestamp;
+        return (loanTimestamp == null) ? null : new Timestamp(loanTimestamp.getTime());
     }
 
     public void setLoanTimestamp(Timestamp loanTimestamp) {
-        this.loanTimestamp = loanTimestamp;
+        this.loanTimestamp = (loanTimestamp == null) ? null : new Timestamp(loanTimestamp.getTime());
     }
 
     public Timestamp getReturnTimestamp() {
-        return returnTimestamp;
+        return (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
     }
 
     public void setReturnTimestamp(Timestamp returnTimestamp) {
-        this.returnTimestamp = returnTimestamp;
+        this.returnTimestamp = (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
     }
 
     public Set<LoanItem> getLoanItems() {

@@ -158,6 +158,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         l.setLoanTimestamp(l2.getLoanTimestamp());
         l.setReturnTimestamp(l2.getReturnTimestamp());
         l.setMember(m1);
+        l.setLoanItems(null);
         loanDao.create(l);
     }
 
