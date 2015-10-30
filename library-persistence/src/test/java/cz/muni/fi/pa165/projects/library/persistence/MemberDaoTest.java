@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.projects.library.persistence;
 import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.projects.library.persistence.dao.MemberDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -24,7 +24,7 @@ import static org.testng.Assert.*;
 @Transactional
 public class MemberDaoTest extends AbstractTestNGSpringContextTests {
 
-    @Autowired
+    @Inject
     public MemberDao memberDao;
 
     private Member member;

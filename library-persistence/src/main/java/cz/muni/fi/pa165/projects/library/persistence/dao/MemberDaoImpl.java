@@ -3,15 +3,15 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import java.util.List;
 import java.util.Objects;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
 
 /**
  * Implementation of DAO for library members
  * @author David Formanek
  */
-@Repository
+@Named
 public class MemberDaoImpl implements MemberDao {
 
     @PersistenceContext

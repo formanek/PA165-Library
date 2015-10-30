@@ -4,11 +4,11 @@ import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.projects.library.persistence.dao.BookDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -31,7 +31,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     @PersistenceContext
     public EntityManager em;
 
-    @Autowired
+    @Inject
     public BookDao bookDao;
 
     private Book book1;

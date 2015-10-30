@@ -15,10 +15,10 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import static org.testng.Assert.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -39,16 +39,16 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     @PersistenceContext
     public EntityManager em;
 
-    @Autowired
+    @Inject
     public LoanDao loanDao;
 
-    @Autowired
+    @Inject
     public LoanItemDao loanItemDao;
 
-    @Autowired
+    @Inject
     public MemberDao memberDao;
 
-    @Autowired
+    @Inject
     public BookDao bookDao;
 
     private Loan l1;

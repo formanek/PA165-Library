@@ -4,16 +4,16 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import java.util.List;
 import java.util.Objects;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
 
 /**
  * Data access object which provides access to Loan entity
  *
  * @author Jan Mosat
  */
-@Repository
+@Named
 public class LoanDaoImpl implements LoanDao {
     
     @PersistenceContext
