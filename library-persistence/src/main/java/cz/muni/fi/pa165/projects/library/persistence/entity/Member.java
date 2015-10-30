@@ -79,7 +79,7 @@ public class Member {
         this.email = email;
     }
     
-    public void setLoanItems(Set<Loan> loans) {
+    public void setLoans(Set<Loan> loans) {
         this.loans = loans;
     }
     
