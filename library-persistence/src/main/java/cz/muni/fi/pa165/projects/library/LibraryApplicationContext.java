@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.projects.library;
 
-import javax.sql.DataSource;
+import cz.muni.fi.pa165.projects.library.persistence.dao.LoanDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +16,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import javax.sql.DataSource;
+
 /**
  *
  * @author Milan Skipala
@@ -23,7 +25,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackages = "cz.muni.fi.pa165.*")
+@ComponentScan(basePackageClasses={LoanDao.class})//(basePackages = "cz.muni.fi.pa165.*")
 public class LibraryApplicationContext {
 
     @Bean
