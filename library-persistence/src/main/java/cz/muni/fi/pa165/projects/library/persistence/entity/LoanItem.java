@@ -1,14 +1,8 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
-import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * Represents an item in a loan
@@ -79,21 +73,17 @@ public class LoanItem {
         this.book = book;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof LoanItem)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof LoanItem) || getId() == null) return false;
         LoanItem loanItem = (LoanItem) o;
-        return Objects.equals(getBook(), loanItem.getBook())
-                && Objects.equals(getLoan(), loanItem.getLoan());
+        return Objects.equals(getId(), loanItem.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBook(), getLoan());
+        return Objects.hash(getId());
     }
 }
