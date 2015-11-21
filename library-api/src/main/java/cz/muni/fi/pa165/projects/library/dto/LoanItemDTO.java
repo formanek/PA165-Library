@@ -1,7 +1,24 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
+import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
+
+import javax.validation.constraints.NotNull;
+
 /**
- * Created by lajci on 15.11.2015.
+ * @author Jaroslav Kaspar
  */
 public class LoanItemDTO {
+
+    @NotNull
+    private Long id;
+
+    @NotNull
+    private BookDTO book;
+
+    @NotNull
+    private Long loanId;
+
+    private BookCondition conditionBefore;
+
+    private BookCondition conditionAfter;
 }

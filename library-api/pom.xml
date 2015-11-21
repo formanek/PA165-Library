@@ -20,6 +20,11 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>
+    <dependency>
+      <groupId>cz.muni.fi.pa165.projects</groupId>
+      <artifactId>library-persistence</artifactId>
+      <version>${version}</version>
+    </dependency>
   </dependencies>
 
 
