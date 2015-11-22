@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
 import cz.muni.fi.pa165.projects.library.service.LoanItemService;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,11 +50,18 @@ public class LoanItemFacadeImpl implements LoanItemFacade {
     @Override
     public List<LoanItemDTO> findByLoan(LoanDTO loan) {
         List<LoanItem> loanItems = loanItemService.findByLoan(beanMappingService.mapTo(loan, Loan.class));
-        return (loanItems == null) ? null : beanMappingService.mapTo(loanItems, LoanItemDTO.class);
+        if (loanItems == null) {
+            return Collections.emptyList();
+        }
+        return beanMappingService.mapTo(loanItems, LoanItemDTO.class);
     }
 
     @Override
     public List<LoanItemDTO> findAll() {
-        return beanMappingService.mapTo(loanItemService.findAll(), LoanItemDTO.class);
+        List<LoanItem> loanItems = loanItemService.findAll();
+        if (loanItems == null) {
+            return Collections.emptyList();
+        }
+        return beanMappingService.mapTo(loanItems, LoanItemDTO.class);
     }
 }
