@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
+import org.springframework.stereotype.Repository;
 
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * @author Jan Mosat
  */
-@Named
+@Repository
 public class LoanDaoImpl implements LoanDao {
 
     @PersistenceContext

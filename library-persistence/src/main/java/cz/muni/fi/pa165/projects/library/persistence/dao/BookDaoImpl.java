@@ -1,19 +1,20 @@
 package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * Data access object which provides access to Book entity
  *
  * @author Milan Skipala
  */
-@Named
+@Repository
 public class BookDaoImpl implements BookDao {
 
     @PersistenceContext
