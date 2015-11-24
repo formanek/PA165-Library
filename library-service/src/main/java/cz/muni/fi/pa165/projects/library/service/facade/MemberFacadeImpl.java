@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.projects.library.service.facade;
 
 import cz.muni.fi.pa165.projects.library.dto.MemberDTO;
+import cz.muni.fi.pa165.projects.library.dto.NewMemberDTO;
 import cz.muni.fi.pa165.projects.library.facade.MemberFacade;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
@@ -38,9 +39,14 @@ public class MemberFacadeImpl implements MemberFacade {
     }
     
     @Override
-    public void registerMember(MemberDTO memberDTO) {
-        Member member = beanMappingService.mapTo(memberDTO, Member.class);
+    public Long registerMember(NewMemberDTO newMemberDTO) {
+        Member member = beanMappingService.mapTo(newMemberDTO, Member.class);
         memberService.create(member);
-        memberDTO.setId(member.getId());
+        return member.getId();
+    }
+
+    @Override
+    public void updateMember(MemberDTO memberDTO) {
+        memberService.update(beanMappingService.mapTo(memberDTO, Member.class));
     }
 }

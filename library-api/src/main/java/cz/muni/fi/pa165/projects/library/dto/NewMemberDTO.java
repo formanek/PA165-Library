@@ -3,24 +3,15 @@ package cz.muni.fi.pa165.projects.library.dto;
 import java.util.Objects;
 
 /**
- * Library member DTO
+ * DTO for creating a new member
  *
  * @author David Formanek
  */
-public class MemberDTO {
+public class NewMemberDTO {
 
-    private Long id;
     private String givenName;
     private String surname;
     private String email;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getGivenName() {
         return givenName;
@@ -57,7 +48,7 @@ public class MemberDTO {
         if (!(obj instanceof MemberDTO)) {
             return false;
         }
-        return Objects.equals(email, ((MemberDTO) obj).email);
+        return Objects.equals(email, ((NewMemberDTO) obj).email);
     }
 
     @Override
@@ -67,7 +58,7 @@ public class MemberDTO {
 
     @Override
     public String toString() {
-        return "MemberDTO{" + "id=" + id + ", givenName=" + givenName + ", surname=" + surname
+        return "MemberDTO{givenName=" + givenName + ", surname=" + surname
                 + ", email=" + email + '}';
     }
 }
