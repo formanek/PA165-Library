@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.projects.library.facade;
 
 import cz.muni.fi.pa165.projects.library.dto.LoanCreateDTO;
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
+import cz.muni.fi.pa165.projects.library.dto.ReturnLoanDTO;
 
 import java.util.List;
 
@@ -12,8 +13,9 @@ public interface LoanFacade {
     List<LoanDTO> getAllLoans();
     List<LoanDTO> getLoansByMember(long memberId);
     LoanDTO getLoanById(long id);
-    long addLoan(LoanCreateDTO loanCreateDTO);
+    long loan(LoanCreateDTO loanCreateDTO);
     void deleteLoan(Long loanId);
-    List<LoanDTO> getAllUnreturnedLoans(long memberId);
+    List<LoanDTO> getAllUnreturnedLoans();
     List<LoanDTO> getAllUnreturnedLoansOfMember(long memberId);
+    void returnLoan(ReturnLoanDTO returnLoanDTO);
 }

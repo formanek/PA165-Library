@@ -7,12 +7,15 @@ import cz.muni.fi.pa165.projects.library.service.LoanService;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +24,8 @@ import java.util.Set;
  * Created by lajci on 15.11.2015.
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@Transactional
 public class LoanServiceTest extends AbstractTestNGSpringContextTests
 {
     @Inject

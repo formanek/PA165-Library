@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.projects.library.service.facade;
 
 import cz.muni.fi.pa165.projects.library.dto.LoanCreateDTO;
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
+import cz.muni.fi.pa165.projects.library.dto.ReturnLoanDTO;
 import cz.muni.fi.pa165.projects.library.facade.LoanFacade;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
@@ -38,7 +39,7 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
-    public List<LoanDTO> getAllUnreturnedLoans(long memberId) {
+    public List<LoanDTO> getAllUnreturnedLoans() {
         return beanMappingService.mapTo(loanService.findAllUnreturnedLoans(),
                 LoanDTO.class);
     }
@@ -59,13 +60,18 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
+    public void returnLoan(ReturnLoanDTO returnLoanDTO) {
+        //TODO IMPLEMENT
+    }
+
+    @Override
     public LoanDTO getLoanById(long id) {
         return beanMappingService.mapTo(loanService.findById(id),
                 LoanDTO.class);
     }
 
     @Override
-    public long addLoan(LoanCreateDTO loanCreateDTO) {
+    public long loan(LoanCreateDTO loanCreateDTO) {
         Loan loan = beanMappingService.mapTo(loanCreateDTO, Loan.class);
         loan.setLoanTimestamp(new Timestamp(System.currentTimeMillis()));
         loanService.create(loan);
