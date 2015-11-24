@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.projects.library.service;
 
+import cz.muni.fi.pa165.projects.library.dto.BookDTO;
 import cz.muni.fi.pa165.projects.library.persistence.dao.BookDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class BookServiceImpl implements BookService {
     
     @Inject
     private BookDao bookDao;
+    
+    @Inject
+    private LoanService loanService;
 
     @Override
     public void create(Book book) {
@@ -22,13 +27,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void remove(Book book) {
+    public void delete(Book book) {
         bookDao.delete(book);
-    }
-
-    @Override
-    public void update(Book book) {
-        bookDao.update(book);
     }
 
     @Override
@@ -42,7 +42,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> find(Book book) {
-        return bookDao.find(book);
-    }    
+    public List<BookDTO> findAllBooksOfAuthor(String author) {
+        return null;
+    }
+
+    @Override
+    public List<BookDTO> findBookByIsbn(String isbn) {
+        return null;
+    }
+
+    @Override
+    public List<BookDTO> findBookByTitle(String isbn) {
+        return null;
+    }
+
+    @Override
+    public boolean isBookAvailable(Book book) {
+        //List<Loan> unreturnedLoans = loanService.getUnreturnedLoans();
+        //for (Loan l : unreturnedLoans)
+        return false;
+    }
 }

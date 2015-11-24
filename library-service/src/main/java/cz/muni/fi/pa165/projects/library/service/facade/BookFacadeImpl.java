@@ -36,14 +36,14 @@ public class BookFacadeImpl implements BookFacade{
     public List<BookDTO> findAllBooksOfAuthor(String author) {
         Book book = new Book();
         book.setAuthor(author);
-        return beanMappingService.mapTo(bookService.find(book),BookDTO.class);
+        return null;//beanMappingService.mapTo(bookService.find(book),BookDTO.class);
     }
 
     @Override
     public List<BookDTO> findBookByIsbn(String isbn) {
         Book book = new Book();
         book.setIsbn(isbn);
-        return beanMappingService.mapTo(bookService.find(book),BookDTO.class);
+        return null;//beanMappingService.mapTo(bookService.find(book),BookDTO.class);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BookFacadeImpl implements BookFacade{
 
     @Override
     public void deleteBook(Long id) {
-        bookService.remove(beanMappingService.mapTo(bookService.findById(id),Book.class));
+        bookService.delete(beanMappingService.mapTo(bookService.findById(id),Book.class));
     }
     
 }
