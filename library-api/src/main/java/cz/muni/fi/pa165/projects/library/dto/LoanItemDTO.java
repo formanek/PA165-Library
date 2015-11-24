@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
-import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
 
 import javax.validation.constraints.NotNull;
 
