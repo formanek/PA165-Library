@@ -2,11 +2,13 @@ package cz.muni.fi.pa165.projects.library.persistence.dao;
 
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
-import java.util.List;
-import java.util.Objects;
+
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Data access object which provides access to Loan entity
@@ -67,5 +69,13 @@ public class LoanDaoImpl implements LoanDao {
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.merge(loan);
+    }
+
+    @Override
+    public Collection<Loan> allUnreturnedLoansOfMember(Member member) {
+        Objects.requireNonNull(member, "Member is null");
+        Objects.requireNonNull(member.getId(), "null id");
+        return em.createQuery("select l from Loan l where l.member = :member and l.returnTimestamp = null", Loan.class)
+                .setParameter("member", member).getResultList();
     }
 }

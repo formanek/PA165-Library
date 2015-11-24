@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +52,15 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<Loan> findAll() {
         return new ArrayList<>(loanDao.findAll());
+    }
+
+    @Override
+    public void returnLoan(Loan loan) {
+        loan.setReturnTimestamp(new Timestamp(System.currentTimeMillis()));
+    }
+
+    @Override
+    public List<Loan> allUnreturnedLoansOfMember(Member member) {
+        return new ArrayList(loanDao.allUnreturnedLoansOfMember(member));
     }
 }

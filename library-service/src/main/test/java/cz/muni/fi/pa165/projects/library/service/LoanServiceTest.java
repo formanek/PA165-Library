@@ -61,7 +61,7 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
         loanItem1.setLoan(loan1);
 
         //TODO Exception: javax.persistence.TransactionRequiredException: No transactional EntityManager available
-        //loanService.create(loan1);
+        loanService.create(loan1);
 
     }
 

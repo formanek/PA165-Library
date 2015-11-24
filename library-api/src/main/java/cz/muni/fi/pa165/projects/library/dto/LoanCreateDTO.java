@@ -4,7 +4,6 @@ package cz.muni.fi.pa165.projects.library.dto;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,16 +14,11 @@ import java.util.Set;
  */
 public class LoanCreateDTO {
 
-    /*@NotNull
-    private Timestamp loanTimestamp;*/
-
-    private Timestamp returnTimestamp;
-
     @NotNull
     private MemberDTO member;
 
     @NotEmpty
-    private Set<LoanItemDTO> loanItems = new HashSet<>();
+    private Set<LoanItemCreateDTO> loanItems = new HashSet<>();
 
     public MemberDTO getMember() {
         return member;
@@ -34,21 +28,14 @@ public class LoanCreateDTO {
         this.member = member;
     }
 
-    public Set<LoanItemDTO> getLoanItems() {
+    public Set<LoanItemCreateDTO> getLoanItems() {
         return Collections.unmodifiableSet(loanItems);
     }
 
-    public void setLoanItems(Set<LoanItemDTO> loanItems) {
+    public void setLoanItems(Set<LoanItemCreateDTO> loanItems) {
         this.loanItems = loanItems;
     }
 
-    public Timestamp getReturnTimestamp() {
-        return (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
-    }
-
-    public void setReturnTimestamp(Timestamp returnTimestamp) {
-        this.returnTimestamp = (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
-    }
 
     //TODO check equals and hashCode
     @Override
@@ -60,11 +47,11 @@ public class LoanCreateDTO {
             return false;
         }
         final LoanCreateDTO other = (LoanCreateDTO) obj;
-        return Objects.equals(getReturnTimestamp(), other.getReturnTimestamp()) && Objects.equals(getMember(), other.getMember());
+        return Objects.equals(getMember(), other.getMember());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReturnTimestamp(), getMember());
+        return Objects.hash(getMember());
     }
 }
