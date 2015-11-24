@@ -16,4 +16,36 @@ public class LoanItemCreateDTO {
     private BookCondition conditionBefore;
 
     private BookCondition conditionAfter;
+
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+
+    public BookCondition getConditionAfter() {
+        return conditionAfter;
+    }
+
+    public void setConditionAfter(BookCondition conditionAfter) {
+        this.conditionAfter = conditionAfter;
+    }
+
+    public BookCondition getConditionBefore() {
+        return conditionBefore;
+    }
+
+    public void setConditionBefore(BookCondition conditionBefore) {
+        this.conditionBefore = conditionBefore;
+    }
+
+    public Long getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(Long loanId) {
+        this.loanId = loanId;
+    }
 }
