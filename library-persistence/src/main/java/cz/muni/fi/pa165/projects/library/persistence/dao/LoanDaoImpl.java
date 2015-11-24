@@ -72,6 +72,11 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
+    public List<Loan> allUnreturnedLoans() {
+        return em.createQuery("select l from Loan l where l.returnTimestamp = null", Loan.class).getResultList();
+    }
+
+    @Override
     public Collection<Loan> allUnreturnedLoansOfMember(Member member) {
         Objects.requireNonNull(member, "Member is null");
         Objects.requireNonNull(member.getId(), "null id");

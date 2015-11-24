@@ -55,8 +55,14 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public List<Loan> findAllUnreturnedLoans() {
+        return new ArrayList<>(loanDao.findAll());
+    }
+
+    @Override
     public void returnLoan(Loan loan) {
         loan.setReturnTimestamp(new Timestamp(System.currentTimeMillis()));
+        loanDao.update(loan);
     }
 
     @Override

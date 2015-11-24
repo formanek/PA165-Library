@@ -20,6 +20,8 @@ public interface LoanService {
 
     List<Loan> findAll();
 
+    List<Loan> findAllUnreturnedLoans();
+
     void returnLoan(Loan loan);
 
     List<Loan> allUnreturnedLoansOfMember(Member member);

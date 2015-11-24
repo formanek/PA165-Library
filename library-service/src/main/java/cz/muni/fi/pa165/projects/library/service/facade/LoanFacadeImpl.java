@@ -4,8 +4,10 @@ import cz.muni.fi.pa165.projects.library.dto.LoanCreateDTO;
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.facade.LoanFacade;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
 import cz.muni.fi.pa165.projects.library.service.LoanService;
+import cz.muni.fi.pa165.projects.library.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +25,8 @@ public class LoanFacadeImpl implements LoanFacade {
     @Inject
     private LoanService loanService;
 
-    //@Inject
-    //private MemberService memberService;
+    @Inject
+    private MemberService memberService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -36,13 +38,24 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
-    public List<LoanDTO> getLoansByMember(long memberId) {
-        //Uncomment after adding MemberServiceImpl
-        //Member member = memberService.findById(memberId);
-        //List<Loan> loans = loanService.allLoansOfMember(member);
+    public List<LoanDTO> getAllUnreturnedLoans(long memberId) {
+        return beanMappingService.mapTo(loanService.findAllUnreturnedLoans(),
+                LoanDTO.class);
+    }
 
-        //return beanMappingService.mapTo(loans, LoanDTO.class);
-        throw new UnsupportedOperationException();
+    @Override
+    public List<LoanDTO> getLoansByMember(long memberId) {
+        Member member = memberService.findById(memberId);
+        List<Loan> loans = loanService.allLoansOfMember(member);
+        return beanMappingService.mapTo(loans, LoanDTO.class);
+    }
+
+    @Override
+    public List<LoanDTO> getAllUnreturnedLoansOfMember(long memberId) {
+        Member member = memberService.findById(memberId);
+        List<Loan> loans = loanService.allLoansOfMember(member);
+        return beanMappingService.mapTo(loanService.findAll(),
+                LoanDTO.class);
     }
 
     @Override

@@ -14,4 +14,6 @@ public interface LoanFacade {
     LoanDTO getLoanById(long id);
     long addLoan(LoanCreateDTO loanCreateDTO);
     void deleteLoan(Long loanId);
+    List<LoanDTO> getAllUnreturnedLoans(long memberId);
+    List<LoanDTO> getAllUnreturnedLoansOfMember(long memberId);
 }

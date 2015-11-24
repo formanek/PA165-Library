@@ -56,4 +56,6 @@ public interface LoanDao {
     public void update(Loan loan);
 
     public Collection<Loan> allUnreturnedLoansOfMember(Member member);
+
+    public Collection<Loan> allUnreturnedLoans();
 }

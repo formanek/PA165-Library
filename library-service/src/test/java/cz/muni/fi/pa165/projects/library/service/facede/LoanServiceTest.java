@@ -1,7 +1,9 @@
-package cz.muni.fi.pa165.projects.library.service;
+package cz.muni.fi.pa165.projects.library.service.facede;
 
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.persistence.entity.*;
+import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
+import cz.muni.fi.pa165.projects.library.service.LoanService;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.ContextConfiguration;
