@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.service.LoanServiceImpl;
+import cz.muni.fi.pa165.projects.library.service.MemberServiceImpl;
 import cz.muni.fi.pa165.projects.library.service.facade.LoanFacadeImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(LibraryApplicationContext.class)
-@ComponentScan(basePackageClasses={LoanServiceImpl.class, LoanFacadeImpl.class})
+@ComponentScan(basePackageClasses={LoanServiceImpl.class, MemberServiceImpl.class, LoanFacadeImpl.class})
 public class ServiceConfiguration {
 
 
