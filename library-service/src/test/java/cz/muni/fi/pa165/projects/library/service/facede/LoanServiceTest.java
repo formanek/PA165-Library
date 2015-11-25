@@ -1,13 +1,24 @@
 package cz.muni.fi.pa165.projects.library.service.facede;
 
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
-import cz.muni.fi.pa165.projects.library.persistence.entity.*;
+import cz.muni.fi.pa165.projects.library.persistence.dao.LoanDao;
+import cz.muni.fi.pa165.projects.library.persistence.dao.LoanItemDao;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
+import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
+import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
-import cz.muni.fi.pa165.projects.library.service.BookService;
 import cz.muni.fi.pa165.projects.library.service.LoanService;
-import cz.muni.fi.pa165.projects.library.service.MemberService;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -15,12 +26,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by lajci on 15.11.2015.
@@ -33,6 +38,12 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
     @Inject
     private BeanMappingService beanMappingService;
 
+    @Mock
+    LoanDao loanDao;
+    
+    @Mock
+    LoanItemDao loanItemDao;
+    
     @Inject
     @InjectMocks
     private LoanService loanService;
@@ -41,6 +52,7 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
 
     @BeforeMethod
     public void setUpMethod(){
+        MockitoAnnotations.initMocks(this);
         loan1 = new Loan();
         Member member1 = new Member();
         member1.setGivenName("Joshua");
@@ -63,13 +75,10 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
         loan1.setLoanItems(items1);
 
         items1.add(loanItem1);
-
-
         loanItem1.setLoan(loan1);
-
-        //TODO Exception: javax.persistence.TransactionRequiredException: No transactional EntityManager available
-        //loanService.create(loan1);
-
+        
+        // TODO move to test
+        loanService.create(loan1);
     }
 
     @Test
