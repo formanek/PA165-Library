@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.projects.library.service.facede;
+package cz.muni.fi.pa165.projects.library.service;
 
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.persistence.dao.LoanDao;
