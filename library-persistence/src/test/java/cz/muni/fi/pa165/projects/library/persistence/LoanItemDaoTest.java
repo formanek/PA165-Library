@@ -299,6 +299,5 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
 
         List<LoanItem> items = loanItemDao.findByLoan(loan1);
         assertTrue(items.size() == 3);
-//        assertTrue(items.contains(item)); TODO: fixme
     }
 }

@@ -12,7 +12,7 @@ public interface LoanService {
 
     void create(Loan loan);
 
-    void remove(Loan loan);
+    void delete(Loan loan);
 
     Loan findById(Long id);
 

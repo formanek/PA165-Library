@@ -54,8 +54,4 @@ public interface LoanDao {
      * @param loan to be updated
      */
     public void update(Loan loan);
-
-    public Collection<Loan> allUnreturnedLoansOfMember(Member member);
-
-    public Collection<Loan> allUnreturnedLoans();
 }

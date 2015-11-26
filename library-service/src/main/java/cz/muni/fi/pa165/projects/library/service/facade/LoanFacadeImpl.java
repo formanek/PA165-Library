@@ -3,8 +3,11 @@ package cz.muni.fi.pa165.projects.library.service.facade;
 import cz.muni.fi.pa165.projects.library.dto.LoanCreateDTO;
 import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.dto.ReturnLoanDTO;
+import cz.muni.fi.pa165.projects.library.dto.ReturnLoanItemDTO;
 import cz.muni.fi.pa165.projects.library.facade.LoanFacade;
+import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
+import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
 import cz.muni.fi.pa165.projects.library.service.LoanService;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -54,14 +56,23 @@ public class LoanFacadeImpl implements LoanFacade {
     @Override
     public List<LoanDTO> getAllUnreturnedLoansOfMember(long memberId) {
         Member member = memberService.findById(memberId);
-        List<Loan> loans = loanService.allLoansOfMember(member);
-        return beanMappingService.mapTo(loanService.findAll(),
+        List<Loan> loans = loanService.allUnreturnedLoansOfMember(member);
+        return beanMappingService.mapTo(loans,
                 LoanDTO.class);
     }
 
     @Override
     public void returnLoan(ReturnLoanDTO returnLoanDTO) {
-        //TODO IMPLEMENT
+        Loan loan = loanService.findById(returnLoanDTO.getLoanId());
+        for (ReturnLoanItemDTO returnLoanItemDTO : returnLoanDTO.getLoanItems())
+        {
+            for(LoanItem loanItem : loan.getLoanItems()) {
+                if (loanItem.getId().equals(returnLoanItemDTO.getLoanItemId()))
+                {
+                    loanItem.setConditionAfter(beanMappingService.mapTo(returnLoanItemDTO.getCondition(), BookCondition.class));
+                }
+            }
+        }
     }
 
     @Override
@@ -73,13 +84,12 @@ public class LoanFacadeImpl implements LoanFacade {
     @Override
     public long loan(LoanCreateDTO loanCreateDTO) {
         Loan loan = beanMappingService.mapTo(loanCreateDTO, Loan.class);
-        loan.setLoanTimestamp(new Timestamp(System.currentTimeMillis()));
         loanService.create(loan);
         return  loan.getId();
     }
 
     @Override
     public void deleteLoan(Long loanId) {
-        loanService.remove(beanMappingService.mapTo(getLoanById(loanId), Loan.class));
+        loanService.delete(beanMappingService.mapTo(getLoanById(loanId), Loan.class));
     }
 }

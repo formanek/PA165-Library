@@ -36,7 +36,6 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void delete(Loan loan) {
         Objects.requireNonNull(loan, "Null loan can't be deleted");
-        //Objects.requireNonNull(loan.getId(), "Deleting loan with null id");
         em.remove(loan);
     }
 
@@ -69,18 +68,5 @@ public class LoanDaoImpl implements LoanDao {
             throw new IllegalArgumentException("Return date must be after Loan date");
         }
         em.merge(loan);
-    }
-
-    @Override
-    public List<Loan> allUnreturnedLoans() {
-        return em.createQuery("select l from Loan l where l.returnTimestamp = null", Loan.class).getResultList();
-    }
-
-    @Override
-    public Collection<Loan> allUnreturnedLoansOfMember(Member member) {
-        Objects.requireNonNull(member, "Member is null");
-        Objects.requireNonNull(member.getId(), "null id");
-        return em.createQuery("select l from Loan l where l.member = :member and l.returnTimestamp = null", Loan.class)
-                .setParameter("member", member).getResultList();
     }
 }
