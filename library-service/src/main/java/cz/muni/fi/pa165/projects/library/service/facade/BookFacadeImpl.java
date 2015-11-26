@@ -7,13 +7,20 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
 import cz.muni.fi.pa165.projects.library.service.BookService;
 import java.util.List;
+import java.util.Objects;
 import javax.inject.Inject;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Milan Skipala
  */
+@Service
+@Transactional
 public class BookFacadeImpl implements BookFacade{
+    
     @Inject
     private BookService bookService;
     
@@ -22,6 +29,16 @@ public class BookFacadeImpl implements BookFacade{
 
     @Override
     public Long addBook(BookCreateDTO bookCreateDTO) {
+        Objects.requireNonNull(bookCreateDTO,"Null BookDTO can't be added.");
+        Objects.requireNonNull(bookCreateDTO.getAuthor(),"BookDTO with null attribute can't be added.");
+        Objects.requireNonNull(bookCreateDTO.getIsbn(),"BookDTO with null attribute can't be added.");
+        Objects.requireNonNull(bookCreateDTO.getTitle(),"BookDTO with null attribute can't be added.");
+        if (bookCreateDTO.getAuthor().trim().length() == 0 
+                || bookCreateDTO.getIsbn().trim().length() == 0 
+                || bookCreateDTO.getTitle().trim().length() == 0) {
+            throw new IllegalArgumentException("Empty string is not valid attribute of BookDTO.");
+        }
+            
         Book book = beanMappingService.mapTo(bookCreateDTO, Book.class);
         bookService.create(book);
         return book.getId();
@@ -29,21 +46,26 @@ public class BookFacadeImpl implements BookFacade{
 
     @Override
     public BookDTO findBookById(Long id) {
+        Objects.requireNonNull(id,"Can't find book with null id.");
         return beanMappingService.mapTo(bookService.findById(id),BookDTO.class);
     }
 
     @Override
     public List<BookDTO> findAllBooksOfAuthor(String author) {
-        Book book = new Book();
-        book.setAuthor(author);
-        return null;//beanMappingService.mapTo(bookService.find(book),BookDTO.class);
+        Objects.requireNonNull(author,"Can't find book with null author.");
+        if (author.trim().length() == 0) {
+            throw new IllegalArgumentException("Empty string is not valid author.");
+        }
+        return beanMappingService.mapTo(bookService.findAllBooksOfAuthor(author),BookDTO.class);
     }
 
     @Override
     public List<BookDTO> findBookByIsbn(String isbn) {
-        Book book = new Book();
-        book.setIsbn(isbn);
-        return null;//beanMappingService.mapTo(bookService.find(book),BookDTO.class);
+        Objects.requireNonNull(isbn,"Can't find book with null isbn.");
+        if (isbn.trim().length() == 0) {
+            throw new IllegalArgumentException("Empty string is not valid isbn.");
+        }
+        return beanMappingService.mapTo(bookService.findBookByIsbn(isbn),BookDTO.class);
     }
 
     @Override
@@ -53,7 +75,23 @@ public class BookFacadeImpl implements BookFacade{
 
     @Override
     public void deleteBook(Long id) {
+        Objects.requireNonNull(id,"Can't delete book with null id.");
         bookService.delete(beanMappingService.mapTo(bookService.findById(id),Book.class));
+    }
+
+    @Override
+    public List<BookDTO> findBookByTitle(String title) {
+        Objects.requireNonNull(title,"Can't find book with null title.");
+        if (title.trim().length() == 0) {
+            throw new IllegalArgumentException("Empty string is not valid title.");
+        }
+        return beanMappingService.mapTo(bookService.findBookByTitle(title),BookDTO.class);
+    }
+
+    @Override
+    public boolean isBookAvailable(Long id) {
+        Objects.requireNonNull(id,"Can't obtain availability of book with null id.");
+        return bookService.isBookAvailable(bookService.findById(id));
     }
     
 }

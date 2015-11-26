@@ -9,13 +9,12 @@ import java.util.List;
  * @author Milan Skipala
  */
 public interface BookFacade {
-    public Long addBook(BookCreateDTO book);    
-    public BookDTO findBookById(Long id);
-    public List<BookDTO> findAllBooksOfAuthor(String author);
-    public List<BookDTO> findBookByIsbn(String isbn);
-    public List<BookDTO> getAllBooks();
-    /*public void changeAuthor(ChangeAuthorDTO author);
-    public void changeTitle(ChangeTitleDTO title);
-    public void changeIsbn(ChangeIsbnDTO isbn);*/
-    public void deleteBook(Long id);
+    Long addBook(BookCreateDTO book);
+    BookDTO findBookById(Long id);
+    List<BookDTO> findAllBooksOfAuthor(String author);
+    List<BookDTO> findBookByIsbn(String isbn);
+    List<BookDTO> findBookByTitle(String title);
+    List<BookDTO> getAllBooks();
+    boolean isBookAvailable(Long id);
+    void deleteBook(Long id);
 }

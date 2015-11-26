@@ -3,20 +3,18 @@ package cz.muni.fi.pa165.projects.library.dto;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Milan Skipala
  */
 public class BookCreateDTO {
-    @NotNull
-    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$")
+    
     private String isbn;
 
-    @NotNull
     private String author;
 
-    @NotNull
     private String title;
 
     public String getIsbn() {
