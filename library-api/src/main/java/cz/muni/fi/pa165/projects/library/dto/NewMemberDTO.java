@@ -45,7 +45,7 @@ public class NewMemberDTO {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof MemberDTO)) {
+        if (!(obj instanceof NewMemberDTO)) {
             return false;
         }
         return Objects.equals(email, ((NewMemberDTO) obj).email);

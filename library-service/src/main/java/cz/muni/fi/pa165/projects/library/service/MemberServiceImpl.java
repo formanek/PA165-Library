@@ -8,7 +8,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Implementation of service layer for library member
+ * 
  * @author David Formanek
  */
 @Service

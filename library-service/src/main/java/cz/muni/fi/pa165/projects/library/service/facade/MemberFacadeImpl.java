@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Implementation of facade layer for library member
+ * 
  * @author David Formanek
  */
 @Service
@@ -25,6 +26,23 @@ public class MemberFacadeImpl implements MemberFacade {
 
     @Inject
     private BeanMappingService beanMappingService;
+
+    @Override
+    public Long registerMember(NewMemberDTO newMemberDTO) {
+        Objects.requireNonNull(newMemberDTO, "null argument member");
+        Objects.requireNonNull(newMemberDTO.getGivenName(), "member given name is null");
+        requireNotEmpty(newMemberDTO.getGivenName(), "member given name");
+        Objects.requireNonNull(newMemberDTO.getSurname(), "member surname is null");
+        requireNotEmpty(newMemberDTO.getSurname(), "member surname");
+        Objects.requireNonNull(newMemberDTO.getEmail(), "member email is null");
+        requireNotEmpty(newMemberDTO.getEmail(), "member email");
+        if (!newMemberDTO.getEmail().contains("@")) {
+            throw new IllegalArgumentException("member email is not valid");
+        }
+        Member member = beanMappingService.mapTo(newMemberDTO, Member.class);
+        memberService.create(member);
+        return member.getId();
+    }
 
     @Override
     public MemberDTO findMemberById(Long id) {
@@ -49,23 +67,6 @@ public class MemberFacadeImpl implements MemberFacade {
     @Override
     public Collection<MemberDTO> getAllMembers() {
         return beanMappingService.mapTo(memberService.findAll(), MemberDTO.class);
-    }
-
-    @Override
-    public Long registerMember(NewMemberDTO newMemberDTO) {
-        Objects.requireNonNull(newMemberDTO, "null argument member");
-        Objects.requireNonNull(newMemberDTO.getGivenName(), "member given name is null");
-        requireNotEmpty(newMemberDTO.getGivenName(), "member given name");
-        Objects.requireNonNull(newMemberDTO.getSurname(), "member surname is null");
-        requireNotEmpty(newMemberDTO.getSurname(), "member surname");
-        Objects.requireNonNull(newMemberDTO.getEmail(), "member email is null");
-        requireNotEmpty(newMemberDTO.getEmail(), "member email");
-        if (!newMemberDTO.getEmail().contains("@")) {
-            throw new IllegalArgumentException("member email is not valid");
-        }
-        Member member = beanMappingService.mapTo(newMemberDTO, Member.class);
-        memberService.create(member);
-        return member.getId();
     }
 
     @Override

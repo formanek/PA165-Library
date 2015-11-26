@@ -63,7 +63,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<Loan> allLoansOfMember(Member member) {
         Objects.requireNonNull(member, "Member can't be null");
-        return new ArrayList(loanDao.allLoansOfMember(member));
+        return new ArrayList<>(loanDao.allLoansOfMember(member));
     }
 
     @Override
