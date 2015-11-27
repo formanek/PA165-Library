@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import cz.muni.fi.pa165.projects.library.service.LoanService;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.aop.framework.Advised;
@@ -26,8 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -120,7 +120,9 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     void loanLoanTest(){
         loanFacade.loan(loanCreateDTO);
-        verify(loanService).create(any(Loan.class));
+        ArgumentCaptor<Loan> argument = ArgumentCaptor.forClass(Loan.class);
+        verify(loanService).create(argument.capture());
+        assertEquals(loan.getLoanItems().size(), 1);
     }
 
     @Test(expectedExceptions = NullPointerException.class, expectedExceptionsMessageRegExp = "Null.*")
