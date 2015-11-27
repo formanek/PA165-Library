@@ -168,8 +168,7 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void loanLoanTest(){
-        Long id = loanFacade.loan(loanCreateDTO);
-        //assertNotNull(id);
+        loanFacade.loan(loanCreateDTO);
         verify(loanService).create(any(Loan.class));
     }
 

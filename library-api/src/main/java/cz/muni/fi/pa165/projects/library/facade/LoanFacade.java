@@ -39,7 +39,7 @@ public interface LoanFacade {
      * @throws NullPointerException when param loanId is null
      * @return id of created Loan
      */
-    long loan(LoanCreateDTO loanCreateDTO);
+    Long loan(LoanCreateDTO loanCreateDTO);
 
     /**
      * Removes Loan from system

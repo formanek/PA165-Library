@@ -91,16 +91,14 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
-    public long loan(LoanCreateDTO loanCreateDTO) {
+    public Long loan(LoanCreateDTO loanCreateDTO) {
         Objects.requireNonNull(loanCreateDTO, "Null loan can't be created");
         Objects.requireNonNull(loanCreateDTO.getMember(), "Member must be specified");
         Objects.requireNonNull(loanCreateDTO.getLoanItems(), "Loan items must be specified");
         Loan loan = beanMappingService.mapTo(loanCreateDTO, Loan.class);
         //TODO asi by to malo nacitat aj book pre kazdy loan Item podla Id z DB
         loanService.create(loan);
-        return 1L;
-        // FIXME: 27.11.2015 NullPointerException
-        //return loan.getId();
+        return loan.getId();
     }
 
     @Override
