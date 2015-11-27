@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Jaroslav Kaspar
@@ -10,7 +10,7 @@ public class ReturnLoanDTO {
 
     private Long loanId;
 
-    private List<ReturnLoanItemDTO> loanItems;
+    private Set<ReturnLoanItemDTO> loanItems;
 
     public Long getLoanId() {
         return loanId;
@@ -20,11 +20,11 @@ public class ReturnLoanDTO {
         this.loanId = loanId;
     }
 
-    public List<ReturnLoanItemDTO> getLoanItems() {
+    public Set<ReturnLoanItemDTO> getLoanItems() {
         return loanItems;
     }
 
-    public void setLoanItems(List<ReturnLoanItemDTO> loanItems) {
+    public void setLoanItems(Set<ReturnLoanItemDTO> loanItems) {
         this.loanItems = loanItems;
     }
 

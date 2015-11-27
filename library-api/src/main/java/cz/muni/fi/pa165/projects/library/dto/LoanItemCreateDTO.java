@@ -10,9 +10,6 @@ public class LoanItemCreateDTO {
     @NotNull
     private Long bookId;
 
-    @NotNull
-    private Long loanId;
-
     private BookCondition conditionBefore;
 
     private BookCondition conditionAfter;
@@ -39,13 +36,5 @@ public class LoanItemCreateDTO {
 
     public void setConditionBefore(BookCondition conditionBefore) {
         this.conditionBefore = conditionBefore;
-    }
-
-    public Long getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(Long loanId) {
-        this.loanId = loanId;
     }
 }

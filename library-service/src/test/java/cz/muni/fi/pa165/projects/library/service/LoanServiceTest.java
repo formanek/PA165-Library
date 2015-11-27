@@ -145,7 +145,7 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
         assertEquals(loans.size(), 1);
 
         loan.setReturnTimestamp(new Timestamp(System.currentTimeMillis()));
-        when(loanService.allLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
+        when(loanService.findAllLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
             add(loan);
         }});
         loans = loanService.findAllUnreturnedLoans();
@@ -157,7 +157,7 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
         when(loanDao.allLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
             add(loan);
         }});
-        List<Loan> testedLoans = loanService.allLoansOfMember(member);
+        List<Loan> testedLoans = loanService.findAllLoansOfMember(member);
 
         assertTrue(testedLoans.contains(loan));
         assertEquals(testedLoans.size(), 1);
@@ -168,30 +168,30 @@ public class LoanServiceTest extends AbstractTestNGSpringContextTests
 
     @Test(expectedExceptions = NullPointerException.class, expectedExceptionsMessageRegExp = "Member.*")
     public void allLoansOfMemberNull() {
-        loanService.allLoansOfMember(null);
+        loanService.findAllLoansOfMember(null);
         verifyZeroInteractions(loanDao);
     }
 
     @Test
     public void allUnreturnedLoansOfMember() {
-        when(loanService.allLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
+        when(loanService.findAllLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
             add(loan);
         }});
-        List<Loan> loans = loanService.allUnreturnedLoansOfMember(member);
+        List<Loan> loans = loanService.findAllUnreturnedLoansOfMember(member);
         assertEquals(loans.size(), 1);
 
 
         loan.setReturnTimestamp(new Timestamp(System.currentTimeMillis()));
-        when(loanService.allLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
+        when(loanService.findAllLoansOfMember(member)).thenReturn(new ArrayList<Loan>(){{
             add(loan);
         }});
-        loans = loanService.allUnreturnedLoansOfMember(member);
+        loans = loanService.findAllUnreturnedLoansOfMember(member);
         assertTrue(loans.isEmpty());
     }
 
     @Test(expectedExceptions = NullPointerException.class, expectedExceptionsMessageRegExp = "Member.*")
     public void allUnreturnedLoansOfMemberNull() {
-        loanService.allUnreturnedLoansOfMember(null);
+        loanService.findAllUnreturnedLoansOfMember(null);
         verifyZeroInteractions(loanDao);
     }
 

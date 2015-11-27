@@ -17,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Created by lajci on 15.11.2015.
+ *
+ * @author Jan Mosat
  */
 
 @Service
@@ -35,61 +37,75 @@ public class LoanFacadeImpl implements LoanFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public List<LoanDTO> getAllLoans() {
+    public List<LoanDTO> findAll() {
         return beanMappingService.mapTo(loanService.findAll(),
                 LoanDTO.class);
     }
 
     @Override
-    public List<LoanDTO> getAllUnreturnedLoans() {
+    public List<LoanDTO> findAllUnreturnedLoans() {
         return beanMappingService.mapTo(loanService.findAllUnreturnedLoans(),
                 LoanDTO.class);
     }
 
     @Override
-    public List<LoanDTO> getLoansByMember(long memberId) {
+    public List<LoanDTO> findLoansOfMember(Long memberId) {
+        Objects.requireNonNull(memberId, "Member with null id");
         Member member = memberService.findById(memberId);
-        List<Loan> loans = loanService.allLoansOfMember(member);
+        List<Loan> loans = loanService.findAllLoansOfMember(member);
         return beanMappingService.mapTo(loans, LoanDTO.class);
     }
 
     @Override
-    public List<LoanDTO> getAllUnreturnedLoansOfMember(long memberId) {
+    public List<LoanDTO> findAllUnreturnedLoansOfMember(Long memberId) {
+        Objects.requireNonNull(memberId, "Member with null id");
         Member member = memberService.findById(memberId);
-        List<Loan> loans = loanService.allUnreturnedLoansOfMember(member);
+        List<Loan> loans = loanService.findAllUnreturnedLoansOfMember(member);
         return beanMappingService.mapTo(loans,
                 LoanDTO.class);
     }
 
     @Override
     public void returnLoan(ReturnLoanDTO returnLoanDTO) {
+        Objects.requireNonNull(returnLoanDTO, "Null loan can't be returned");
+        Objects.requireNonNull(returnLoanDTO.getLoanItems(), "Loan items must be specified");
         Loan loan = loanService.findById(returnLoanDTO.getLoanId());
         for (ReturnLoanItemDTO returnLoanItemDTO : returnLoanDTO.getLoanItems())
         {
             for(LoanItem loanItem : loan.getLoanItems()) {
                 if (loanItem.getId().equals(returnLoanItemDTO.getLoanItemId()))
                 {
-                    loanItem.setConditionAfter(beanMappingService.mapTo(returnLoanItemDTO.getCondition(), BookCondition.class));
+                    loanItem.setConditionAfter(BookCondition.POOR);
+                    //TODO FIX ME
+                    //loanItem.setConditionAfter(beanMappingService.mapTo(returnLoanItemDTO.getCondition(), BookCondition.class));
                 }
             }
         }
     }
 
     @Override
-    public LoanDTO getLoanById(long id) {
-        return beanMappingService.mapTo(loanService.findById(id),
+    public LoanDTO findLoanById(Long loanId) {
+        Objects.requireNonNull(loanId, "Loan with null id");
+        return beanMappingService.mapTo(loanService.findById(loanId),
                 LoanDTO.class);
     }
 
     @Override
     public long loan(LoanCreateDTO loanCreateDTO) {
+        Objects.requireNonNull(loanCreateDTO, "Null loan can't be created");
+        Objects.requireNonNull(loanCreateDTO.getMember(), "Member must be specified");
+        Objects.requireNonNull(loanCreateDTO.getLoanItems(), "Loan items must be specified");
         Loan loan = beanMappingService.mapTo(loanCreateDTO, Loan.class);
+        //TODO asi by to malo nacitat aj book pre kazdy loan Item podla Id z DB
         loanService.create(loan);
-        return  loan.getId();
+        return 1L;
+        // FIXME: 27.11.2015 NullPointerException
+        //return loan.getId();
     }
 
     @Override
     public void deleteLoan(Long loanId) {
-        loanService.delete(beanMappingService.mapTo(getLoanById(loanId), Loan.class));
+        Objects.requireNonNull(loanId, "Loan with null id");
+        loanService.delete(beanMappingService.mapTo(findLoanById(loanId), Loan.class));
     }
 }

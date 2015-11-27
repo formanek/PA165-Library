@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Created by lajci on 15.11.2015.
+ *
+ * @author Jan Mosat
  */
 public class LoanDTO {
 
@@ -60,7 +61,6 @@ public class LoanDTO {
         this.returnTimestamp = (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
     }
 
-    //TODO check equals and hashCode
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

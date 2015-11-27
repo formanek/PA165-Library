@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by lajci on 15.11.2015.
+ *
+ * @author Jan Mosat
  */
 
 @Service
@@ -30,11 +31,12 @@ public class LoanServiceImpl implements LoanService {
     public void create(Loan loan) {
         Objects.requireNonNull(loan, "Loan can't be null");
         loan.setLoanTimestamp(new Timestamp(System.currentTimeMillis()));
+        loanDao.create(loan);
         for (LoanItem loanItem : loan.getLoanItems())
         {
+            loanItem.setLoan(loan);
             loanItemDao.create(loanItem);
         }
-        loanDao.create(loan);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<Loan> allLoansOfMember(Member member) {
+    public List<Loan> findAllLoansOfMember(Member member) {
         Objects.requireNonNull(member, "Member can't be null");
         return new ArrayList<>(loanDao.allLoansOfMember(member));
     }
@@ -77,9 +79,9 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<Loan> allUnreturnedLoansOfMember(Member member) {
+    public List<Loan> findAllUnreturnedLoansOfMember(Member member) {
         Objects.requireNonNull(member, "Member can't be null");
-        return this.unreturnedLoans(this.allLoansOfMember(member));
+        return this.unreturnedLoans(this.findAllLoansOfMember(member));
     }
 
     private List<Loan> unreturnedLoans(List<Loan> loans)
