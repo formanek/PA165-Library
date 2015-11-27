@@ -73,13 +73,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean isBookAvailable(Book book) {
         Objects.requireNonNull(book);
-        List<Loan> allLoans = loanService.findAll();
-        List<Loan> unreturnedLoans = new ArrayList<>();
-        for (Loan l : allLoans) {
-            if (l.getReturnTimestamp() == null) {
-                unreturnedLoans.add(l);
-            }
-        }
+        List<Loan> unreturnedLoans = loanService.findAllUnreturnedLoans();
         List<Book> unreturnedBooks = new ArrayList<>();
         for (Loan l : unreturnedLoans) {
             for (LoanItem i : l.getLoanItems()) {

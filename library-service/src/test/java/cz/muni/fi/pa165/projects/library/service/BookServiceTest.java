@@ -160,10 +160,10 @@ public class BookServiceTest extends AbstractTestNGSpringContextTests {
         
         List<Loan> list = new ArrayList<>();
         list.add(loan);
-        when(loanService.findAll()).thenReturn(list);
+        when(loanService.findAllUnreturnedLoans()).thenReturn(list);
         
-        assertFalse(bookService.isBookAvailable(book1));        
-        when(loan.getReturnTimestamp()).thenReturn(new Timestamp(System.currentTimeMillis()));        
+        assertFalse(bookService.isBookAvailable(book1));
+        when(loanService.findAllUnreturnedLoans()).thenReturn(new ArrayList<Loan>());
         assertTrue(bookService.isBookAvailable(book1));
     }
 }
