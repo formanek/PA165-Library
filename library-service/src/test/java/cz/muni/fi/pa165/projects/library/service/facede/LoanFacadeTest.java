@@ -80,7 +80,7 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
         loanItem = new LoanItem();
         Set<LoanItem> items = new HashSet<>();
         loanItem.setBook(book);
-        loanItem.setConditionBefore(cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition.AS_NEW);
+        loanItem.setConditionBefore(BookCondition.AS_NEW);
 
         loan = new Loan();
         loan.setLoanTimestamp(loanTimestamp);
@@ -181,11 +181,10 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
     void returnLoanTest(){
         loanItem.setId(999L);
         returnLoanItemDTO.setLoanItemId(999L);
-        //TODO UNCOMMENT after fixing conversion
-        //loanItem.setConditionAfter( cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition.POOR);
+        returnLoanItemDTO.setCondition(BookCondition.POOR);
         when(loanService.findById(any(Long.class))).thenReturn(loan);
         loanFacade.returnLoan(returnLoanDTO);
-        assertEquals(loanItem.getConditionAfter(), cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition.POOR);
+        assertEquals(loanItem.getConditionAfter(), BookCondition.POOR);
     }
     
     @Test

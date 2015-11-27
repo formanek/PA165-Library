@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
 import cz.muni.fi.pa165.projects.library.dto.ReturnLoanDTO;
 import cz.muni.fi.pa165.projects.library.dto.ReturnLoanItemDTO;
 import cz.muni.fi.pa165.projects.library.facade.LoanFacade;
-import cz.muni.fi.pa165.projects.library.persistence.entity.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
@@ -75,9 +74,7 @@ public class LoanFacadeImpl implements LoanFacade {
             for(LoanItem loanItem : loan.getLoanItems()) {
                 if (loanItem.getId().equals(returnLoanItemDTO.getLoanItemId()))
                 {
-                    loanItem.setConditionAfter(BookCondition.POOR);
-                    //TODO FIX ME
-                    //loanItem.setConditionAfter(beanMappingService.mapTo(returnLoanItemDTO.getCondition(), BookCondition.class));
+                    loanItem.setConditionAfter(returnLoanItemDTO.getCondition());
                 }
             }
         }

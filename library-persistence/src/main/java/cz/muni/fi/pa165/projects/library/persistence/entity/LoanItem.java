@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
+import cz.muni.fi.pa165.projects.library.dto.BookCondition;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

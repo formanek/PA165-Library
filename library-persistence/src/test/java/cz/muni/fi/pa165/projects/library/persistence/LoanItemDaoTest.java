@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.projects.library.persistence;
 
 import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
+import cz.muni.fi.pa165.projects.library.dto.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.dao.BookDao;
 import cz.muni.fi.pa165.projects.library.persistence.dao.LoanDao;
 import cz.muni.fi.pa165.projects.library.persistence.dao.LoanItemDao;
 import cz.muni.fi.pa165.projects.library.persistence.dao.MemberDao;
-import cz.muni.fi.pa165.projects.library.persistence.entity.*;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
+import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
+import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
