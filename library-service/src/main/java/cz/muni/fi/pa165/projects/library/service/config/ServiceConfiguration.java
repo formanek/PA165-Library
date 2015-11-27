@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.projects.library.service.config;
 
 import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
-import cz.muni.fi.pa165.projects.library.dto.LoanDTO;
+import cz.muni.fi.pa165.projects.library.dto.LoanCreateDTO;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.service.LoanServiceImpl;
 import cz.muni.fi.pa165.projects.library.service.MemberServiceImpl;
@@ -15,7 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * Created by lajci on 15.11.2015.
+ *
+ * @author Jan Mosat
  */
 @Configuration
 @Import(LibraryApplicationContext.class)
@@ -33,7 +34,7 @@ public class ServiceConfiguration {
     public class DozerCustomConfig extends BeanMappingBuilder {
         @Override
         protected void configure() {
-            mapping(Loan.class, LoanDTO.class);
+            mapping(Loan.class, LoanCreateDTO.class).exclude("loanItems");
         }
     }
 

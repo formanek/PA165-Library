@@ -53,6 +53,10 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
 
     private ReturnLoanItemDTO returnLoanItemDTO;
 
+    private Member member;
+
+    private MemberDTO memberDTO;
+
     private Timestamp loanTimestamp = Timestamp.valueOf("2014-10-23 10:10:10.0");
 
     @BeforeClass
@@ -66,73 +70,20 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void setUpMethod() {
-        loan = new Loan();
-        Member member = new Member();
+        member = new Member();
         member.setGivenName("Joshua");
         member.setSurname("Bloch");
         member.setEmail("effective@java.com");
 
-        Book book = new Book();
-        book.setAuthor("author1");
-        book.setIsbn("0321356683");
-        book.setTitle("title1");
-
-        loanItem = new LoanItem();
-        Set<LoanItem> items = new HashSet<>();
-        loanItem.setBook(book);
-        loanItem.setConditionBefore(BookCondition.AS_NEW);
-
-        loan = new Loan();
-        loan.setLoanTimestamp(loanTimestamp);
-        loan.setMember(member);
-        loan.setLoanItems(items);
-
-        items.add(loanItem);
-        loanItem.setLoan(loan);
-
-        loanDTO = new LoanDTO();
-
-        loanDTO.setLoanTimestamp(loanTimestamp);
-
-        MemberDTO memberDTO = new MemberDTO();
+        memberDTO = new MemberDTO();
         memberDTO.setGivenName(member.getGivenName());
         memberDTO.setEmail(member.getEmail());
         memberDTO.setSurname(member.getSurname());
-        loanDTO.setMember(memberDTO);
 
-        LoanItemDTO loanItemDTO = new LoanItemDTO();
-        Set<LoanItemDTO> itemsDTO = new HashSet<>();
-
-
-
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setAuthor("author1");
-        bookDTO.setIsbn("0321356683");
-        bookDTO.setTitle("title1");
-
-        loanItemDTO.setBook(bookDTO);
-        loanItemDTO.setConditionBefore(BookCondition.AS_NEW);
-        loanDTO.setLoanItems(itemsDTO);
-
-        returnLoanDTO = new ReturnLoanDTO();
-        Set<ReturnLoanItemDTO> returnItemsDTO = new HashSet<>();
-
-        returnLoanItemDTO = new ReturnLoanItemDTO();
-        returnLoanItemDTO.setCondition(BookCondition.AS_NEW);
-
-        returnItemsDTO.add(returnLoanItemDTO);
-        returnLoanDTO.setLoanItems(returnItemsDTO);
-
-        loanCreateDTO = new LoanCreateDTO();
-        loanCreateDTO.setMember(memberDTO);
-        Set<LoanItemCreateDTO> loanItemsCreate = new HashSet<>();
-        LoanItemCreateDTO loanItemCreateDTO = new LoanItemCreateDTO();
-        loanItemCreateDTO.setConditionBefore(BookCondition.AS_NEW);
-        loanItemCreateDTO.setBookId(1L);
-
-        loanItemsCreate.add(loanItemCreateDTO);
-
-        loanCreateDTO.setLoanItems(loanItemsCreate);
+        createLoanInit();
+        createLoanDTOInit();
+        loanReturnDTOInit();
+        loanCreateDTOInit();
     }
     
     @Test(expectedExceptions = NullPointerException.class, expectedExceptionsMessageRegExp = "Loan.*")
@@ -235,5 +186,79 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
         loanDTOs.add(loanDTO);
         when(loanService.findAllUnreturnedLoansOfMember(any(Member.class))).thenReturn(loans);
         assertEquals(loanDTOs, loanFacade.findAllUnreturnedLoansOfMember(1L));
+    }
+
+    private void createLoanInit()
+    {
+        loan = new Loan();
+
+
+        Book book = new Book();
+        book.setAuthor("author1");
+        book.setIsbn("0321356683");
+        book.setTitle("title1");
+
+        loanItem = new LoanItem();
+        Set<LoanItem> items = new HashSet<>();
+        loanItem.setBook(book);
+        loanItem.setConditionBefore(BookCondition.AS_NEW);
+
+        loan = new Loan();
+        loan.setLoanTimestamp(loanTimestamp);
+        loan.setMember(member);
+        loan.setLoanItems(items);
+
+        items.add(loanItem);
+        loanItem.setLoan(loan);
+    }
+
+    private void createLoanDTOInit()
+    {
+        loanDTO = new LoanDTO();
+
+        loanDTO.setLoanTimestamp(loanTimestamp);
+
+
+        loanDTO.setMember(memberDTO);
+
+        LoanItemDTO loanItemDTO = new LoanItemDTO();
+        Set<LoanItemDTO> itemsDTO = new HashSet<>();
+
+
+
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setAuthor("author1");
+        bookDTO.setIsbn("0321356683");
+        bookDTO.setTitle("title1");
+
+        loanItemDTO.setBook(bookDTO);
+        loanItemDTO.setConditionBefore(BookCondition.AS_NEW);
+        loanDTO.setLoanItems(itemsDTO);
+    }
+
+    private void loanReturnDTOInit()
+    {
+        returnLoanDTO = new ReturnLoanDTO();
+        Set<ReturnLoanItemDTO> returnItemsDTO = new HashSet<>();
+
+        returnLoanItemDTO = new ReturnLoanItemDTO();
+        returnLoanItemDTO.setCondition(BookCondition.AS_NEW);
+
+        returnItemsDTO.add(returnLoanItemDTO);
+        returnLoanDTO.setLoanItems(returnItemsDTO);
+    }
+
+    private void loanCreateDTOInit()
+    {
+        loanCreateDTO = new LoanCreateDTO();
+        loanCreateDTO.setMember(memberDTO);
+        Set<LoanItemCreateDTO> loanItemsCreate = new HashSet<>();
+        LoanItemCreateDTO loanItemCreateDTO = new LoanItemCreateDTO();
+        loanItemCreateDTO.setConditionBefore(BookCondition.AS_NEW);
+        loanItemCreateDTO.setBookId(1L);
+
+        loanItemsCreate.add(loanItemCreateDTO);
+
+        loanCreateDTO.setLoanItems(loanItemsCreate);
     }
 }

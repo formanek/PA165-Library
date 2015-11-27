@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.projects.library.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -70,9 +71,7 @@ public class Loan {
     }
 
     public Set<LoanItem> getLoanItems() {
-        //TODO // FIXME: 26.11.2015
-        //return Collections.unmodifiableSet(loanItems);
-        return loanItems;
+        return Collections.unmodifiableSet(loanItems);
     }
 
     public void setLoanItems(Set<LoanItem> loanItems) {
@@ -80,21 +79,15 @@ public class Loan {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof Loan)) {
-            return false;
-        }
-        final Loan other = (Loan) obj;
-        return Objects.equals(getLoanTimestamp(), other.getLoanTimestamp())
-                && Objects.equals(getReturnTimestamp(), other.getReturnTimestamp())
-                && Objects.equals(getMember(), other.getMember());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Loan) || getId() == null) return false;
+        Loan loan= (Loan) o;
+        return Objects.equals(getId(), loan.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLoanTimestamp(), getReturnTimestamp(), getMember());
+        return Objects.hash(getId());
     }
 }
