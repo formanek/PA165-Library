@@ -24,6 +24,7 @@
     <module>library-service</module>
     <module>library-api</module>
     <module>library-web</module>
+    <module>library-rest</module>
   </modules>
 
   <properties>
