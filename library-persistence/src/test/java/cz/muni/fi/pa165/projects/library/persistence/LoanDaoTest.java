@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -180,7 +181,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(l);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void createLoanWithBadReturnDate() {
         Loan l = new Loan();
         l.setLoanTimestamp(l2.getReturnTimestamp());
@@ -262,7 +263,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.update(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void updateWithWrongLoanDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2020,1,20);
@@ -270,7 +271,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.update(l2);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void updateWithWrongReturnDateTest() {
         Calendar c = Calendar.getInstance();
         c.set(2011,1,20);

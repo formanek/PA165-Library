@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Member;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -20,7 +21,6 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -164,7 +164,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests {
         loanItemDao.create(item);
     }
 
-    @Test(expectedExceptions = {PersistenceException.class})
+    @Test(expectedExceptions = {DataAccessException.class})
     public void createLoanItemWithIdTest() {
         LoanItem item = new LoanItem();
         item.setId(loanItem1.getId());

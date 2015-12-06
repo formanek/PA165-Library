@@ -8,7 +8,7 @@ import java.util.Objects;
 public class ReturnLoanItemDTO {
 
     private Long loanItemId;
-    
+
     private BookCondition condition;
 
     public BookCondition getCondition() {

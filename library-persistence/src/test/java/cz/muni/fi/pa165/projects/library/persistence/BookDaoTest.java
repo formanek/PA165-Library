@@ -3,21 +3,21 @@ package cz.muni.fi.pa165.projects.library.persistence;
 import cz.muni.fi.pa165.projects.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.projects.library.persistence.dao.BookDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
-import java.util.List;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.transaction.Transactional;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.util.List;
+
+import static org.testng.Assert.*;
 
 /**
  *
@@ -78,7 +78,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.create(book);
     }
 
-    @Test(expectedExceptions = {PersistenceException.class})
+    @Test(expectedExceptions = {DataAccessException.class})
     public void createExistingBookTest() {
         bookDao.create(book1);
         Book book = new Book();
@@ -105,7 +105,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.delete(null);
     }
 
-    @Test(expectedExceptions = {IllegalArgumentException.class})
+    @Test(expectedExceptions = {DataAccessException.class})
     public void deleteNonExistingBook() {
         book1.setId(999999999L);
         bookDao.delete(book1);
@@ -131,7 +131,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.find(null);
     }
 
-    @Test(expectedExceptions = {IllegalArgumentException.class})
+    @Test(expectedExceptions = {DataAccessException.class})
     public void findBookWithSetBothIdAndIsbnTest() {
         Book book = new Book();
         book.setId(1234567L);
