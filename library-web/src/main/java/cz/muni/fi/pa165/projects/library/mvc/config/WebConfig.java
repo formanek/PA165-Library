@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.projects.library.mvc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
+@Import(DataConfiguration.class)
 @ComponentScan(basePackages = "cz.muni.fi.pa165.projects.library.mvc.controllers")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
@@ -36,4 +38,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public Validator validator() {
         return new LocalValidatorFactoryBean();
     }
+
+
 }
