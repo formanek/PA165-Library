@@ -43,11 +43,11 @@ public class MemberController {
         return "member/detail";
     }
     
-    @RequestMapping(value = "/detail/{email}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/detail/{email}", method = RequestMethod.GET)
     public String detail(@PathVariable String email, Model model) {
         model.addAttribute("member", memberFacade.findMemberByEmail(email));
         return "member/detail";
-    }
+    }*/
     
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProduct(Model model) {
