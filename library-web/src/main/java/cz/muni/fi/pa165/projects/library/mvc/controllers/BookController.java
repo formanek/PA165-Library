@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,8 +39,8 @@ public class BookController {
         return "book/new";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("categoryCreate") BookCreateDTO formBean, BindingResult bindingResult,
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(@Valid @ModelAttribute("bookCreate") BookCreateDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -47,13 +48,19 @@ public class BookController {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
-            return "book";
+            return "book/new";
         }
-        //create product
         Long id = bookFacade.addBook(formBean);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Book " + id + " was created");
-        return "redirect:" + uriBuilder.path("/book/list").toUriString();
+        return "redirect:" + uriBuilder.path("/book").toUriString();
+    }
+
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
+    public String removeAd(@PathVariable("id") long bookId, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        bookFacade.deleteBook(bookId);
+        //redirectAttributes.addFlashAttribute("alert_success", "Book \"" + bookId + "\" was deleted.");
+        return "redirect:" + uriBuilder.path("/book").toUriString();
     }
 
     @RequestMapping(method = RequestMethod.GET)

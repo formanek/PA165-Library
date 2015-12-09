@@ -1,20 +1,24 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
-import java.util.Objects;
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  *
  * @author Milan Skipala
  */
 public class BookCreateDTO {
-    
+
+    @NotBlank
+    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$")
     private String isbn;
 
+    @NotBlank
     private String author;
 
+    @NotBlank
     private String title;
 
     public String getIsbn() {

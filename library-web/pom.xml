@@ -64,7 +64,8 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <path>/pa165</path>
+            <contextReloadable>true</contextReloadable>
+            <path>/pa165</path>
         </configuration>
       </plugin>
       <plugin>
