@@ -46,9 +46,9 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="${pageContext.request.contextPath}/member">Members</a></li>
-                        <li><a href="${pageContext.request.contextPath}/book">Books</a></li>
-                        <li><a href="${pageContext.request.contextPath}/loan">Loans</a></li>
+                        <li class="${pageContext.request.requestURI.contains("/member") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/member">Members</a></li>
+                        <li class="${pageContext.request.requestURI.contains("/book") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/book">Books</a></li>
+                        <li class="${pageContext.request.requestURI.contains("/loan") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/loan">Loans</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -72,7 +72,14 @@
                 </div>
             </div>
         </div>
-        <!--page content starts here--> 
+
+        <!-- alerts -->
+        <c:if test="${not empty alert_info}">
+            <div class="alert alert-info" role="alert"><c:out value="${alert_info}"/></div>
+        </c:if>
+
+        <!--page content starts here-->
+
         <div class="container-fluid" id="content">
             <jsp:invoke fragment="body"/>
         </div>

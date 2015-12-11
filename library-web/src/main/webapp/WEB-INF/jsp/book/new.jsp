@@ -11,28 +11,29 @@
         <form:form method="post" action="${pageContext.request.contextPath}/book/create"
                    modelAttribute="bookCreate" cssClass="form-horizontal">
             <div class="form-group ${isbn_error?'has-error':''}">
-                <form:label path="isbn" cssClass="col-sm-2 control-label">Isbn</form:label>
-                <div class="col-sm-10">
+                <form:label path="isbn" cssClass="col-sm-1 control-label">Isbn</form:label>
+                <div class="col-sm-4">
                     <form:input path="isbn" cssClass="form-control"/>
                     <form:errors path="isbn" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group ${author_error?'has-error':''}">
-                <form:label path="author" cssClass="col-sm-2 control-label">Author</form:label>
-                <div class="col-sm-10">
+                <form:label path="author" cssClass="col-sm-1 control-label">Author</form:label>
+                <div class="col-sm-4">
                     <form:input path="author" cssClass="form-control"/>
                     <form:errors path="author" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group ${title_error?'has-error':''}">
-                <form:label path="title" cssClass="col-sm-2 control-label">Title</form:label>
-                <div class="col-sm-10">
+                <form:label path="title" cssClass="col-sm-1 control-label">Title</form:label>
+                <div class="col-sm-4">
                     <form:input path="title" cssClass="form-control"/>
                     <form:errors path="title" cssClass="help-block"/>
                 </div>
             </div>
+            <a href="${pageContext.request.contextPath}/book" class="btn btn-danger">Back</a>
             <button class="btn btn-primary" type="submit">Create book</button>
-        </form:form>        
+        </form:form>
 
     </jsp:attribute>
 </my:pagetemplate>

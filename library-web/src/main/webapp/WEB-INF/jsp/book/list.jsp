@@ -12,13 +12,14 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             New Book
         </a>
+        <hr>
 
-        <table class="table">
+        <table class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th>isbn</th>
-                <th>author</th>
-                <th>title</th>
+                <th>Isbn</th>
+                <th>Author</th>
+                <th>Title</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                     <td><c:out value="${book.author}"/></td>
                     <td><c:out value="${book.title}"/></td>
                     <td>
+                        <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn btn-info">View</a>
+                    </td>
+                    <td>
                         <form method="post" action="${pageContext.request.contextPath}/book/remove/${book.id}">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -36,7 +40,6 @@
             </c:forEach>
             </tbody>
         </table>
-
 
     </jsp:attribute>
 </my:pagetemplate>

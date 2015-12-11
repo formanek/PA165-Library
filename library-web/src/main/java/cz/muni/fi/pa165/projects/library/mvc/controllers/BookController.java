@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +30,6 @@ public class BookController {
     @Autowired
     private BookFacade bookFacade = new BookFacadeImpl();
 
-
-
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newBook(Model model) {
         model.addAttribute("bookCreate", new BookCreateDTO());
@@ -43,23 +40,27 @@ public class BookController {
     public String create(@Valid @ModelAttribute("bookCreate") BookCreateDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-            }
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
             return "book/new";
         }
         Long id = bookFacade.addBook(formBean);
-        //report success
-        redirectAttributes.addFlashAttribute("alert_success", "Book " + id + " was created");
+        redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was created");
         return "redirect:" + uriBuilder.path("/book").toUriString();
+    }
+
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public String unprocessed(@PathVariable long id, Model model) {
+        model.addAttribute("available", bookFacade.isBookAvailable(id));
+        model.addAttribute("book", bookFacade.findBookById(id));
+        return "book/detail";
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
     public String removeAd(@PathVariable("id") long bookId, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         bookFacade.deleteBook(bookId);
-        //redirectAttributes.addFlashAttribute("alert_success", "Book \"" + bookId + "\" was deleted.");
+        redirectAttributes.addFlashAttribute("alert_info", "Book " + bookId + " was deleted.");
         return "redirect:" + uriBuilder.path("/book").toUriString();
     }
 
