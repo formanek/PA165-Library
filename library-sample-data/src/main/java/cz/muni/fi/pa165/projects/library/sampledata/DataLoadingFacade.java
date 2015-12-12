@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.projects.library.mvc.config;
+package cz.muni.fi.pa165.projects.library.sampledata;
 
 import cz.muni.fi.pa165.projects.library.dto.BookCondition;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;

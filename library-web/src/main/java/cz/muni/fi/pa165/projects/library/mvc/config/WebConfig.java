@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.projects.library.mvc.config;
 
+import cz.muni.fi.pa165.projects.library.sampledata.DataConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

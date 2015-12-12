@@ -23,15 +23,45 @@
           <path>/pa165/rest</path>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>4.1.8.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-api</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+       <groupId>javax.inject</groupId>
+       <artifactId>javax.inject</artifactId>
+    </dependency>
+    <dependency>
+       <groupId>com.fasterxml.jackson.core</groupId>
+       <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+       <groupId>com.fasterxml.jackson.core</groupId>
+       <artifactId>jackson-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>cz.muni.fi.pa165.projects</groupId>
+      <artifactId>library-service</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+      <dependency>
+          <groupId>cz.muni.fi.pa165.projects</groupId>
+          <artifactId>library-sample-data</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+  </dependencies>
 
 </project>

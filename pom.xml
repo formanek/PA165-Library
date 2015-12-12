@@ -25,6 +25,7 @@
     <module>library-api</module>
     <module>library-web</module>
     <module>library-rest</module>
+    <module>library-sample-data</module>
   </modules>
 
   <properties>

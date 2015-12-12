@@ -53,6 +53,11 @@
       <artifactId>library-service</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
+    <dependency>
+      <groupId>cz.muni.fi.pa165.projects</groupId>
+      <artifactId>library-sample-data</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
   </dependencies>
 
