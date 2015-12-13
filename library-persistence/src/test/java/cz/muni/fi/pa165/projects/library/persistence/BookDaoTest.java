@@ -105,8 +105,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.delete(null);
     }
 
-    //TODO FIX
-    //@Test(expectedExceptions = {DataAccessException.class})
+    @Test(expectedExceptions = {DataAccessException.class})
     public void deleteNonExistingBook() {
         book1.setId(999999999L);
         bookDao.delete(book1);
