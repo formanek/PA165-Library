@@ -51,16 +51,27 @@ public class BookController {
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String unprocessed(@PathVariable long id, Model model) {
-        model.addAttribute("available", bookFacade.isBookAvailable(id));
-        model.addAttribute("book", bookFacade.findBookById(id));
+    public String unprocessed(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+        try {
+            model.addAttribute("book", bookFacade.findBookById(id));
+            model.addAttribute("available", bookFacade.isBookAvailable(id));
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + id + " was not found.");
+            return "redirect:" + uriBuilder.path("/book").toUriString();
+        }
         return "book/detail";
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
     public String removeAd(@PathVariable("id") long bookId, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
-        bookFacade.deleteBook(bookId);
-        redirectAttributes.addFlashAttribute("alert_info", "Book " + bookId + " was deleted.");
+        try {
+            bookFacade.deleteBook(bookId);
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + bookId + " was deleted.");
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + bookId + " was not deleted.");
+        }
         return "redirect:" + uriBuilder.path("/book").toUriString();
     }
 
