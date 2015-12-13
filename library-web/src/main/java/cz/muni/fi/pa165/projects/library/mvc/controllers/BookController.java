@@ -28,7 +28,7 @@ import javax.validation.Valid;
 public class BookController {
 
     @Autowired
-    private BookFacade bookFacade = new BookFacadeImpl();
+    private BookFacade bookFacade;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newBook(Model model) {

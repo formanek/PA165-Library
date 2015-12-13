@@ -6,7 +6,7 @@
 <my:pagetemplate title="Loan detail">
     <jsp:attribute name="body">
         <h2>Basic info</h2>
-        Loaned <fmt:formatDate value="${loan.loanTimestamp}" pattern="yyyy-MM-dd"/><br>
+        Loaned <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/><br>
         <c:choose>
             <c:when test="${not empty loan.returnTimestamp}">
                 Returned <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/>
