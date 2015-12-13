@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.projects.library.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -69,9 +68,10 @@ public class Loan {
     public void setReturnTimestamp(Timestamp returnTimestamp) {
         this.returnTimestamp = (returnTimestamp == null) ? null : new Timestamp(returnTimestamp.getTime());
     }
-
+    // FIXME unmodifiableSet
     public Set<LoanItem> getLoanItems() {
-        return Collections.unmodifiableSet(loanItems);
+//        return Collections.unmodifiableSet(loanItems);
+        return this.loanItems;
     }
 
     public void setLoanItems(Set<LoanItem> loanItems) {

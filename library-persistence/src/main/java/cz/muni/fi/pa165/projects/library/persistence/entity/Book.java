@@ -1,13 +1,11 @@
 package cz.muni.fi.pa165.projects.library.persistence.entity;
 
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Class that represents Book which can be lent to the Members
@@ -33,6 +31,9 @@ public class Book {
     @NotNull
     @Column(nullable = false)
     private String title;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "book")
+    private Set<LoanItem> loanItems = new HashSet<>();
 
     public Book() {
     }
@@ -67,6 +68,15 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    // FIXME unmodifiableSet
+    public Set<LoanItem> getLoanItems() {
+//        return Collections.unmodifiableSet(loanItems);
+        return this.loanItems;
+    }
+
+    public void setLoanItems(Set<LoanItem> loanItems) {
+        this.loanItems = loanItems;
     }
 
     @Override
