@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * DTO for creating a new member
@@ -9,8 +11,11 @@ import java.util.Objects;
  */
 public class NewMemberDTO {
 
+    @NotBlank(message = "Name has to be filled in")
     private String givenName;
+    @NotBlank(message = "Surname has to be filled in")
     private String surname;
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Valid email address has to be filled in")
     private String email;
 
     public String getGivenName() {

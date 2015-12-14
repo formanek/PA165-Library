@@ -1,6 +1,9 @@
 package cz.muni.fi.pa165.projects.library.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Library member DTO
@@ -9,9 +12,13 @@ import java.util.Objects;
  */
 public class MemberDTO {
 
+    @NotNull
     private Long id;
+    @NotBlank(message = "Name has to be filled in")
     private String givenName;
+    @NotBlank(message = "Surame has to be filled in")
     private String surname;
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Valid email address has to be filled in")
     private String email;
 
     public Long getId() {

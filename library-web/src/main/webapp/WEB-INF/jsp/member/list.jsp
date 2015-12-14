@@ -8,15 +8,15 @@
 
 <c:set var="title" value="${\"Library members\"}"/>
 
-<%-- note: <tr class="active"> makes the row highlighted --%>
 <my:pagetemplate title="${title}">
     <jsp:attribute name="body">
-        <h1>${title}</h1>
-
+        <a href="${pageContext.request.contextPath}/member/new" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Register member 
+        </a>
         <table class="table table-striped table-hover ">
             <thead>
                 <tr>
-                    <%--<th>Id</th>--%>
                     <th>Email</th>
                     <th>Name</th>
                     <th>Surname</th>
@@ -26,14 +26,12 @@
             <tbody>
                 <c:forEach items="${members}" var="member">
                     <tr>
-                        <%--<td>${member.id}</td>--%>
-                        <td><fmt:formatDate value="${member.email}"/></td>
+                        <td><c:out value="${member.email}"/></td>
                         <td><c:out value="${member.givenName}"/></td>
                         <td><c:out value="${member.surname}"/></td>
                         <td>
-                            <a href="/member/detail/${member.id}" class="btn btn-primary">Detail</a>
+                            <a href="${pageContext.request.contextPath}/member/detail/${member.id}" class="btn btn-info">Detail</a>
                         </td>
-                        
                     </tr>
                 </c:forEach>
             </tbody>
