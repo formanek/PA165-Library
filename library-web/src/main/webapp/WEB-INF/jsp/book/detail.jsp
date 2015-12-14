@@ -6,8 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <my:pagetemplate title="Book ${book.id} detail">
-<jsp:attribute name="body">
-
+    <jsp:attribute name="body">
         <table class="table">
             <tr>
                 <td class="col-md-2"><b>Id</b></td>
@@ -34,8 +33,8 @@
                 <td><c:out value="${book.loanable && available ? \"Yes \" : \"No \"}"/></td>
             </tr>
             <tr>
-                <td><a href="${pageContext.request.contextPath}/book" class="btn btn-danger">Back</a></td>
+                <td><input type="button" value="Back" onclick="history.go(-1)" class="btn btn-danger"></td>
             </tr>
         </table>
-</jsp:attribute>
+    </jsp:attribute>
 </my:pagetemplate>

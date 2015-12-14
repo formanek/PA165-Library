@@ -12,7 +12,7 @@ import java.util.Objects;
 public class BookCreateDTO {
 
     @NotBlank
-    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$")
+    @Pattern(regexp = "^(97(8|9))?\\d{9}(\\d|X)$", message = "Valid isbn has to be filled in")
     private String isbn;
 
     @NotBlank

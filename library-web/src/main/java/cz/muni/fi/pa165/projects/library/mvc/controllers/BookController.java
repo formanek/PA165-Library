@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.projects.library.mvc.controllers;
 
 import cz.muni.fi.pa165.projects.library.dto.BookCreateDTO;
+import cz.muni.fi.pa165.projects.library.dto.BookDTO;
 import cz.muni.fi.pa165.projects.library.facade.BookFacade;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 
 /**
+ * SpringMVC Controller for book administration
  * @author Jan Mosat
  */
 @Controller
@@ -26,12 +28,22 @@ public class BookController {
     @Autowired
     private BookFacade bookFacade;
 
+    /**
+     * Prepares form for book creation
+     * @param model data to display
+     * @return JSP page
+     */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newBook(Model model) {
         model.addAttribute("bookCreate", new BookCreateDTO());
         return "book/new";
     }
 
+    /**
+     * Creates a new book
+     * @param model data to display
+     * @return JSP page
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("bookCreate") BookCreateDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
@@ -46,6 +58,12 @@ public class BookController {
         return "redirect:" + uriBuilder.path("/book").toUriString();
     }
 
+    /**
+     * Shows one specified books
+     * @param id of book
+     * @param model data to display
+     * @return JSP page
+     */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         try {
@@ -59,19 +77,32 @@ public class BookController {
         return "book/detail";
     }
 
+    /**
+     * Switches loanable attribute for book (Removes from books which library lends)
+     * @param id of book
+     * @param loanable bool if book was marked as loanable
+     * @return JSP page
+     */
     @RequestMapping(value = "/loanability/{id}", method = RequestMethod.POST)
-    public String loanability(@PathVariable("id") long bookId, @RequestParam(value="loanable", required = false, defaultValue = "true")
+    public String loanability(@PathVariable("id") long id, @RequestParam(value="loanable", required = false, defaultValue = "true")
     boolean loanable, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        BookDTO book = bookFacade.findBookById(id);
         if (loanable) {
-            redirectAttributes.addFlashAttribute("alert_info", "Book was marked as not loanable.");
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was marked as not loanable.");
         }
         else {
-            redirectAttributes.addFlashAttribute("alert_info", "Book was marked as loanable.");
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was marked as loanable.");
         }
-        bookFacade.changeLoanability(bookId);
+        bookFacade.changeLoanability(id, !book.getLoanable());
         return "redirect:" + uriBuilder.path("/book").queryParam("loanable",loanable).toUriString();
     }
 
+    /**
+     * Shows a list of books which library has access to
+     * @param model data to display
+     * @param loanable bool if loanable items should be displayed
+     * @return JSP page
+     */
     @RequestMapping()
     public String list(@RequestParam(value="loanable", required = false, defaultValue = "true")
     boolean loanable, Model model) {

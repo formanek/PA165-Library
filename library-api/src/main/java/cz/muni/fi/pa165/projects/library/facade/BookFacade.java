@@ -11,13 +11,13 @@ import java.util.List;
 public interface BookFacade {
     /**
      * Add book in the system.
-     * @param book
+     * @param book book to add
      * @return id of the added book
      */
     Long addBook(BookCreateDTO book);
     /**
      * retrieves the book with specified id
-     * @param id
+     * @param id id of book
      * @return retrieved book or null if the book was not found
      * @throws NullPointerException when book param is null, IllegalArgumentException 
      * when book param has some of the attributes null or empty
@@ -25,7 +25,7 @@ public interface BookFacade {
     BookDTO findBookById(Long id);
     /**
      * find all books of the specified author
-     * @param author
+     * @param author author of the book
      * @return list of books written by the specified author
      * @throws NullPointerException when author param is null, IllegalArgumentException 
      * when author is empty string
@@ -65,8 +65,24 @@ public interface BookFacade {
      * @throws NullPointerException when the id is null
      */
     void deleteBook(Long id);
-    void changeLoanability(Long id);
+
+    /**
+     * change loanability of book
+     * @param id id of book
+     * @param loanability bool if book should be loanable
+     */
+    void changeLoanability(Long id, boolean loanability);
+
+    /**
+     * retrieve all books that are in the system and are marked as loanable
+     * @return list of all loanable books in the system
+     */
     List<BookDTO> getAllLoanableBooks();
+
+    /**
+     * retrieve all books that are in the system and are marked as unloanable
+     * @return list of all unloanable books in the system
+     */
     List<BookDTO> getAllUnloanableBooks();
 
 }

@@ -32,11 +32,20 @@ public interface BookService {
      * @return list of books
      */
     List<Book> findAll();
+
+    /**
+     * retrieve all books in the system which are marked as loanable
+     * @return list of loanable books
+     */
     List<Book> findAllLoanable();
+    /**
+     * retrieve all books in the system which are marked as unloanable
+     * @return list of unloanable books
+     */
     List<Book> findAllUnloanable();
     /**
      * find all books of the specified author
-     * @param author
+     * @param author author of the book
      * @return list of books written by the specified author
      * @throws NullPointerException when author param is null, IllegalArgumentException 
      * when author is empty string
@@ -72,6 +81,10 @@ public interface BookService {
      */
     boolean isBookAvailable(Book book);
 
+    /**
+     * Switches loanability of book (boolean value)
+     * @param book book of which loanability should be switched
+     */
     void changeLoanability(Book book);
     
 }

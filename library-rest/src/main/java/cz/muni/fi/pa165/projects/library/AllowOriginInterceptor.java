@@ -17,7 +17,7 @@ public class AllowOriginInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods",
-                "GET, POST, PUT, DELETE, OPTIONS");
+                "GET, POST, PUT, OPTIONS");
         return true;
     }
 

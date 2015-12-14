@@ -40,6 +40,7 @@ public class BookFacadeImpl implements BookFacade{
         }
             
         Book book = beanMappingService.mapTo(bookCreateDTO, Book.class);
+        if (book.getLoanable() == null)
         book.setLoanable(true);
         bookService.create(book);
         return book.getId();
@@ -91,9 +92,12 @@ public class BookFacadeImpl implements BookFacade{
     }
 
     @Override
-    public void changeLoanability(Long id) {
+    public void changeLoanability(Long id, boolean loanability) {
         Objects.requireNonNull(id,"Can't change loanability of book with null id.");
-        bookService.changeLoanability(beanMappingService.mapTo(bookService.findById(id),Book.class));
+        Book book = bookService.findById(id);
+        if (book.getLoanable() != loanability) {
+            bookService.changeLoanability(book);
+        }
     }
 
     @Override

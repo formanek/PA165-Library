@@ -17,7 +17,7 @@
             </div>
 
             <form action="${pageContext.request.contextPath}/book">
-                <div class="col-md-offset-4 col-md-2">
+                <div class="col-md-offset-4 col-md-2 col-xs-4">
                     <select class="form-control" name="loanable">
                         <option value="true" ${param.loanable ? 'selected' : ''}>Loanable</option>
                         <option value="false" ${empty param.loanable || param.loanable ? '' : 'selected'}>Unloanable</option>
@@ -46,16 +46,16 @@
                     <td class="col-md-3"><c:out value="${book.author}"/></td>
                     <td class="col-md-3"><c:out value="${book.title}"/></td>
                     <td class="col-md-1">
-                        <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn btn-info">View</a>
+                        <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn btn-info btn-block">View</a>
                     </td>
-                    <td class="col-md-1">
+                    <td class="col-md-1 col-lg-1">
                         <form method="post" action="${pageContext.request.contextPath}/book/loanability/${book.id}?loanable=${book.loanable}">
                             <c:choose>
                                 <c:when test="${empty param.loanable || param.loanable}">
-                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                    <button type="submit" class="btn btn-danger btn-block">Remove</button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="submit" class="btn btn-success">Return</button>
+                                    <button type="submit" class="btn btn-success btn-block">Return</button>
                                 </c:otherwise>
                             </c:choose>
                         </form>
