@@ -26,8 +26,12 @@
                 <td><c:out value="${book.title}"/></td>
             </tr>
             <tr>
-                <td class="col-md-2"><b>Is available?</b></td>
-                <td><c:out value="${available ? \"Yes \" : \"No \"}"/></td>
+                <td class="col-md-2"><b>Loanable?</b></td>
+                <td><c:out value="${book.loanable ? \"Yes \" : \"No \"}"/></td>
+            </tr>
+            <tr>
+                <td class="col-md-2"><b>Available?</b></td>
+                <td><c:out value="${book.loanable && available ? \"Yes \" : \"No \"}"/></td>
             </tr>
             <tr>
                 <td><a href="${pageContext.request.contextPath}/book" class="btn btn-danger">Back</a></td>

@@ -199,6 +199,7 @@ public class LoanFacadeTest extends AbstractTestNGSpringContextTests {
         book.setAuthor("author1");
         book.setIsbn("0321356683");
         book.setTitle("title1");
+        book.setLoanable(true);
 
         loanItem = new LoanItem();
         Set<LoanItem> items = new HashSet<>();

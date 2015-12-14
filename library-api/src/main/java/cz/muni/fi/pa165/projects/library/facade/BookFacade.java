@@ -65,4 +65,8 @@ public interface BookFacade {
      * @throws NullPointerException when the id is null
      */
     void deleteBook(Long id);
+    void changeLoanability(Long id);
+    List<BookDTO> getAllLoanableBooks();
+    List<BookDTO> getAllUnloanableBooks();
+
 }

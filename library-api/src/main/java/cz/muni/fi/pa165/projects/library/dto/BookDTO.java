@@ -16,6 +16,8 @@ public class BookDTO {
 
     private String title;
 
+    private boolean loanable;
+
     public Long getId() {
         return id;
     }
@@ -46,6 +48,14 @@ public class BookDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Boolean getLoanable() {
+        return loanable;
+    }
+
+    public void setLoanable(Boolean loanable) {
+        this.loanable = loanable;
     }
 
     @Override

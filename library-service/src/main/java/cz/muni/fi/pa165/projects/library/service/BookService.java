@@ -32,6 +32,8 @@ public interface BookService {
      * @return list of books
      */
     List<Book> findAll();
+    List<Book> findAllLoanable();
+    List<Book> findAllUnloanable();
     /**
      * find all books of the specified author
      * @param author
@@ -69,5 +71,7 @@ public interface BookService {
      * @return true if the book is available
      */
     boolean isBookAvailable(Book book);
+
+    void changeLoanability(Book book);
     
 }

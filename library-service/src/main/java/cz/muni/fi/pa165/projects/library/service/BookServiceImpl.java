@@ -4,11 +4,12 @@ import cz.muni.fi.pa165.projects.library.persistence.dao.BookDao;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
+import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.inject.Inject;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -47,6 +48,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findAllLoanable() {
+        List<Book> loanableBooks = new ArrayList<>();
+        for (Book book : findAll())
+        {
+            if (book.getLoanable()) {
+                loanableBooks.add(book);
+            }
+        }
+        return loanableBooks;
+    }
+
+    @Override
+    public List<Book> findAllUnloanable() {
+        List<Book> unloanableBooks = new ArrayList<>();
+        for (Book book : findAll())
+        {
+            if (!book.getLoanable()) {
+                unloanableBooks.add(book);
+            }
+        }
+        return unloanableBooks;
+    }
+
+    @Override
     public List<Book> findAllBooksOfAuthor(String author) {
         Objects.requireNonNull(author, "Author can't be null");
         Book b = new Book();
@@ -81,5 +106,11 @@ public class BookServiceImpl implements BookService {
             }
         }
         return !unreturnedBooks.contains(book);
+    }
+
+    @Override
+    public void changeLoanability(Book book) {
+        book.setLoanable(!book.getLoanable());
+        bookDao.update(book);
     }
 }

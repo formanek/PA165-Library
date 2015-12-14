@@ -3,9 +3,7 @@ package cz.muni.fi.pa165.projects.library.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Class that represents Book which can be lent to the Members
@@ -32,8 +30,9 @@ public class Book {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(orphanRemoval = true, mappedBy = "book")
-    private Set<LoanItem> loanItems = new HashSet<>();
+    @NotNull
+    @Column(nullable = false)
+    private Boolean loanable;
 
     public Book() {
     }
@@ -69,19 +68,18 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
-    // FIXME unmodifiableSet
-    public Set<LoanItem> getLoanItems() {
-//        return Collections.unmodifiableSet(loanItems);
-        return this.loanItems;
+
+    public Boolean getLoanable() {
+        return loanable;
     }
 
-    public void setLoanItems(Set<LoanItem> loanItems) {
-        this.loanItems = loanItems;
+    public void setLoanable(Boolean loanable) {
+        this.loanable = loanable;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn, author, title);
+        return Objects.hash(id, isbn, author, title, loanable);
     }
 
     @Override
@@ -93,7 +91,8 @@ public class Book {
             Book other = (Book) obj;
             return Objects.equals(getIsbn(), other.getIsbn())
                     && Objects.equals(getAuthor(), other.getAuthor())
-                    && Objects.equals(getTitle(), other.getTitle());
+                    && Objects.equals(getTitle(), other.getTitle())
+                    && Objects.equals(getLoanable(), other.getLoanable());
         }
         return false;
     }

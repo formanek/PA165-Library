@@ -8,10 +8,27 @@
 <my:pagetemplate title="Books">
     <jsp:attribute name="body">
 
-        <a href="${pageContext.request.contextPath}/book/new" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            New Book
-        </a>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <a href="${pageContext.request.contextPath}/book/new" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                New Book
+                </a>
+            </div>
+
+            <form action="${pageContext.request.contextPath}/book">
+                <div class="col-md-offset-4 col-md-2">
+                    <select class="form-control" name="loanable">
+                        <option value="true" ${param.loanable ? 'selected' : ''}>Loanable</option>
+                        <option value="false" ${empty param.loanable || param.loanable ? '' : 'selected'}>Unloanable</option>
+
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary" type="submit">Filter</button>
+                </div>
+            </form>
+        </div>
         <hr>
 
         <table class="table table-hover table-condensed fixed">
@@ -32,8 +49,15 @@
                         <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn btn-info">View</a>
                     </td>
                     <td class="col-md-1">
-                        <form method="post" action="${pageContext.request.contextPath}/book/remove/${book.id}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                        <form method="post" action="${pageContext.request.contextPath}/book/loanability/${book.id}?loanable=${book.loanable}">
+                            <c:choose>
+                                <c:when test="${empty param.loanable || param.loanable}">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit" class="btn btn-success">Return</button>
+                                </c:otherwise>
+                            </c:choose>
                         </form>
                     </td>
                 </tr>

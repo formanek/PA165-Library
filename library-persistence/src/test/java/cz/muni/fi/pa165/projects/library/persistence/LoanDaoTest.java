@@ -124,6 +124,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
             b.setAuthor("Author");
             b.setIsbn("0321356683");
             b.setTitle("Title");
+            b.setLoanable(true);
             bookDao.create(b);
             li.setBook(b);
             li.setConditionBefore(BookCondition.AS_NEW);

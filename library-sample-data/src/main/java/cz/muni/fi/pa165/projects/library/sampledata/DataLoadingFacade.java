@@ -55,31 +55,43 @@ public class DataLoadingFacade {
         book1.setAuthor("Pasi Ilmari Jääskeläinen");
         book1.setIsbn("9788074325915");
         book1.setTitle("Literární spolek Laury Sněžné");
+        book1.setLoanable(true);
         bookService.create(book1);
 
         Book book2 = new Book();
         book2.setAuthor("Gregory David Roberts");
         book2.setIsbn("9788088130000");
         book2.setTitle("Šantaram");
+        book2.setLoanable(true);
         bookService.create(book2);
 
         Book book3 = new Book();
         book3.setAuthor("Simon Bond");
         book3.setIsbn("9788074072864");
         book3.setTitle("101 způsobů, jak použít mrtvou kočku");
+        book3.setLoanable(true);
         bookService.create(book3);
 
         Book book4 = new Book();
         book4.setAuthor("David Lagercrantz");
         book4.setIsbn("9788074915239");
         book4.setTitle("Dívka v pavoučí síti");
+        book4.setLoanable(true);
         bookService.create(book4);
 
         Book book5 = new Book();
         book5.setAuthor("Jo Nesbo");
         book5.setIsbn("9788074733574");
         book5.setTitle("Syn");
+        book5.setLoanable(true);
         bookService.create(book5);
+
+        Book book6 = new Book();
+        book6.setAuthor("Joshua Bloch");
+        book6.setIsbn("9780132778046");
+        book6.setTitle("Effective Java");
+        book6.setLoanable(false);
+        bookService.create(book6);
 
         // Unreturned loan - Jan
 

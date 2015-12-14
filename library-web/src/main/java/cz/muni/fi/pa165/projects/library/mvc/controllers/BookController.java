@@ -3,17 +3,13 @@ package cz.muni.fi.pa165.projects.library.mvc.controllers;
 import cz.muni.fi.pa165.projects.library.dto.BookCreateDTO;
 import cz.muni.fi.pa165.projects.library.facade.BookFacade;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
-import cz.muni.fi.pa165.projects.library.service.facade.BookFacadeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,7 +47,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String unprocessed(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+    public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("book", bookFacade.findBookById(id));
             model.addAttribute("available", bookFacade.isBookAvailable(id));
@@ -63,22 +59,28 @@ public class BookController {
         return "book/detail";
     }
 
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
-    public String removeAd(@PathVariable("id") long bookId, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
-        try {
-            bookFacade.deleteBook(bookId);
-            redirectAttributes.addFlashAttribute("alert_info", "Book " + bookId + " was deleted.");
+    @RequestMapping(value = "/loanability/{id}", method = RequestMethod.POST)
+    public String loanability(@PathVariable("id") long bookId, @RequestParam(value="loanable", required = false, defaultValue = "true")
+    boolean loanable, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        if (loanable) {
+            redirectAttributes.addFlashAttribute("alert_info", "Book was marked as not loanable.");
         }
-        catch (Exception e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book " + bookId + " was not deleted.");
+        else {
+            redirectAttributes.addFlashAttribute("alert_info", "Book was marked as loanable.");
         }
-        return "redirect:" + uriBuilder.path("/book").toUriString();
+        bookFacade.changeLoanability(bookId);
+        return "redirect:" + uriBuilder.path("/book").queryParam("loanable",loanable).toUriString();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
-        model.addAttribute("books", bookFacade.getAllBooks());
+    @RequestMapping()
+    public String list(@RequestParam(value="loanable", required = false, defaultValue = "true")
+    boolean loanable, Model model) {
+        if (loanable) {
+            model.addAttribute("books", bookFacade.getAllLoanableBooks());
+        }
+        else {
+            model.addAttribute("books", bookFacade.getAllUnloanableBooks());
+        }
         return "book/list";
     }
-
 }

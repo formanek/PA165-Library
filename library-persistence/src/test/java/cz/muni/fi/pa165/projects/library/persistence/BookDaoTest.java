@@ -43,10 +43,12 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         book1.setAuthor("author1");
         book1.setIsbn("0321356683");
         book1.setTitle("title1");
+        book1.setLoanable(true);
         book2 = new Book();
         book2.setAuthor("author2");
         book2.setIsbn("0596009208");
         book2.setTitle("title2");
+        book2.setLoanable(true);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})

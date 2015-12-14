@@ -6,25 +6,25 @@ import cz.muni.fi.pa165.projects.library.facade.BookFacade;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.service.BookService;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import org.mockito.Mock;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.util.ReflectionTestUtils;
-import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.*;
+import static org.testng.Assert.*;
 
 /**
  *
@@ -52,6 +52,7 @@ public class BookFacadeTest extends AbstractTestNGSpringContextTests {
         book.setAuthor("Joshua Bloch");
         book.setIsbn("0321356683");
         book.setTitle("Effective Java");
+        book.setLoanable(true);
         bookDTO = new BookDTO();
         bookDTO.setAuthor("Joshua Bloch");
         bookDTO.setIsbn("0321356683");

@@ -6,12 +6,12 @@ import cz.muni.fi.pa165.projects.library.facade.BookFacade;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.service.BeanMappingService;
 import cz.muni.fi.pa165.projects.library.service.BookService;
-import java.util.List;
-import java.util.Objects;
-import javax.inject.Inject;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -40,6 +40,7 @@ public class BookFacadeImpl implements BookFacade{
         }
             
         Book book = beanMappingService.mapTo(bookCreateDTO, Book.class);
+        book.setLoanable(true);
         bookService.create(book);
         return book.getId();
     }
@@ -74,9 +75,25 @@ public class BookFacadeImpl implements BookFacade{
     }
 
     @Override
+    public List<BookDTO> getAllLoanableBooks() {
+        return beanMappingService.mapTo(bookService.findAllLoanable(),BookDTO.class);
+    }
+
+    @Override
+    public List<BookDTO> getAllUnloanableBooks() {
+        return beanMappingService.mapTo(bookService.findAllUnloanable(),BookDTO.class);
+    }
+
+    @Override
     public void deleteBook(Long id) {
         Objects.requireNonNull(id,"Can't delete book with null id.");
         bookService.delete(beanMappingService.mapTo(bookService.findById(id),Book.class));
+    }
+
+    @Override
+    public void changeLoanability(Long id) {
+        Objects.requireNonNull(id,"Can't change loanability of book with null id.");
+        bookService.changeLoanability(beanMappingService.mapTo(bookService.findById(id),Book.class));
     }
 
     @Override
@@ -93,5 +110,7 @@ public class BookFacadeImpl implements BookFacade{
         Objects.requireNonNull(id,"Can't obtain availability of book with null id.");
         return bookService.isBookAvailable(bookService.findById(id));
     }
+
+
     
 }

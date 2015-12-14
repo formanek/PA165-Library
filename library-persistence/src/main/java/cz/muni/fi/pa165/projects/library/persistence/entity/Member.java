@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.projects.library.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -75,10 +76,8 @@ public class Member {
         this.loans = loans;
     }
 
-    //FIXME unmodifiableSet
     public Set<Loan> getLoans() {
-//        return Collections.unmodifiableSet(loans);
-        return this.loans;
+        return Collections.unmodifiableSet(loans);
     }
 
     @Override
