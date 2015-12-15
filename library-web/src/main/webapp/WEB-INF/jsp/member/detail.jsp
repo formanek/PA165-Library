@@ -13,7 +13,7 @@
         <form:form class="form-horizontal" action="${pageContext.request.contextPath}/member/update/${member.id}" modelAttribute="member">
             <legend>View or edit member details</legend>
             <div class="form-group">
-                <a href="${pageContext.request.contextPath}/loan" class="btn btn-primary col-lg-4 col-lg-offset-2">
+                <a href="${pageContext.request.contextPath}/loan/new/${member.id}" class="btn btn-primary col-lg-4 col-lg-offset-2">
                     Create new loan for this member
                 </a>
             </div>
@@ -45,10 +45,10 @@
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <a href="${pageContext.request.contextPath}/member/list" class="btn btn-default">
+                    <span onclick="history.go(-1)" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                         Go back
-                    </a>
+                    </span>
                     <button type="submit" class="btn btn-primary">Update member</button>
                 </div>
             </div>
