@@ -79,7 +79,7 @@ public class MemberController {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
-            return "redirect:" + uriBuilder.path("/member/detail/{id}").buildAndExpand(formBean.getId()).encode().toUriString();
+            return  "member/detail";
         }
         memberFacade.updateMember(formBean);
         redirectAttributes.addFlashAttribute("alert_info", "Member " + formBean.getGivenName() + " " + formBean.getSurname() +  " was updated");

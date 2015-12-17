@@ -33,7 +33,7 @@
                 <td><c:out value="${book.loanable && available ? \"Yes \" : \"No \"}"/></td>
             </tr>
             <tr>
-                <td><input type="button" value="Back" onclick="history.go(-1)" class="btn btn-danger"></td>
+                <td><input type="button" value="Back" onclick="history.go(-1)" class="btn btn-default"></td>
             </tr>
         </table>
     </jsp:attribute>

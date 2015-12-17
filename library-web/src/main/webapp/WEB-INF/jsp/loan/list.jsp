@@ -5,12 +5,12 @@
 
 <my:pagetemplate title="List of loans">
     <jsp:attribute name="body">
-        <table class="table">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>loaned</th>
-                    <th>returned</th>
-                    <th>member</th>
+                    <th>Loaned</th>
+                    <th>Returned</th>
+                    <th>Member</th>
                     <th></th>
                 </tr>
             </thead>
@@ -26,7 +26,7 @@
                         <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/loan/return/${loan.id}">return</a>
+                        <a href="${pageContext.request.contextPath}/loan/return/${loan.id}" class="btn-sm btn-default">Return</a>
                     </c:otherwise>
                 </c:choose>
                 </td>
@@ -36,7 +36,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/loan/detail/${loan.id}">detail</a>
+                    <a href="${pageContext.request.contextPath}/loan/detail/${loan.id}" class="btn-sm btn-default">Loan detail</a>
                 </td>
                 </tr>
             </c:forEach>

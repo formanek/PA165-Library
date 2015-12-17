@@ -20,7 +20,7 @@
                     <th>Email</th>
                     <th>Name</th>
                     <th>Surname</th>
-                    <th>Detail</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                         <td><c:out value="${member.givenName}"/></td>
                         <td><c:out value="${member.surname}"/></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/member/detail/${member.id}" class="btn btn-info">Detail</a>
+                            <a href="${pageContext.request.contextPath}/member/detail/${member.id}" class="btn-sm btn-default">Detail</a>
                         </td>
                     </tr>
                 </c:forEach>

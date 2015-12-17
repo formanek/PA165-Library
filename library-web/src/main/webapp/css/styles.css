@@ -43,3 +43,17 @@ h3,
     background-color: #34d8b9;
     border-color: #34d8b9;
 }
+
+table a:not(.btn).btn-sm, .table a:not(.btn).btn-sm {
+    text-decoration: none;
+}
+
+.form-button {
+    border: none; 
+    padding-left: 0; 
+    padding-right: 0;
+}
+
+.form-just-with-button {
+    display: inline;
+}

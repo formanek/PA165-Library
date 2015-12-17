@@ -7,7 +7,6 @@
 
 <my:pagetemplate title="New Book">
     <jsp:attribute name="body">
-
         <form:form method="post" action="${pageContext.request.contextPath}/book/create"
                    modelAttribute="bookCreate" cssClass="form-horizontal">
             <div class="form-group ${isbn_error?'has-error':''}">
@@ -31,9 +30,10 @@
                     <form:errors path="title" cssClass="help-block"/>
                 </div>
             </div>
-            <a href="${pageContext.request.contextPath}/book" class="btn btn-danger">Back</a>
-            <button class="btn btn-primary" type="submit">Create book</button>
+            <div class="col-lg-offset-1">
+                <a href="${pageContext.request.contextPath}/book" class="btn btn-default">Back</a>
+                <button class="btn btn-primary" type="submit">Create book</button>
+            </div>
         </form:form>
-
     </jsp:attribute>
 </my:pagetemplate>
