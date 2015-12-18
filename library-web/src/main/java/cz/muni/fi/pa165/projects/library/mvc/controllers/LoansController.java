@@ -45,6 +45,13 @@ public class LoansController {
         model.addAttribute("loans", loanFacade.findAll());
         return "loan/list";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{memberId}")
+    public String listOfMember(@PathVariable long memberId, Model model) {
+        model.addAttribute("member", memberFacade.findMemberById(memberId));
+        model.addAttribute("loans", loanFacade.findLoansOfMember(memberId));
+        return "loan/list";
+    }
     
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model) {

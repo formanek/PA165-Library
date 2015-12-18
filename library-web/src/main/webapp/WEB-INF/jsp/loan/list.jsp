@@ -5,6 +5,13 @@
 
 <my:pagetemplate title="List of loans">
     <jsp:attribute name="body">
+        <c:if test="${not empty member}">
+            <h2>of member
+                <a href="${pageContext.request.contextPath}/member/detail/${member.id}">
+                    <c:out value="${member.givenName}"/>&nbsp;<c:out value="${member.surname}"/>
+                </a>
+            </h2>
+        </c:if>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -15,14 +22,14 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${loans}" var="loan">
+            <c:forEach items="${loans}" var="loan">
                 <tr>
                 <td>
                     <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.loanTimestamp}"/>
                 </td>
                 <td>
-                    <c:choose>
-                        <c:when test="${not empty loan.returnTimestamp}">
+                <c:choose>
+                    <c:when test="${not empty loan.returnTimestamp}">
                         <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/>
                     </c:when>
                     <c:otherwise>
