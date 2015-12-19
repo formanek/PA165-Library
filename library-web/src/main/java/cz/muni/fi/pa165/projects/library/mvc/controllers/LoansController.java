@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.projects.library.facade.MemberFacade;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,12 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import static cz.muni.fi.pa165.projects.library.mvc.config.security.UserRoles.LIBRARIAN;
+
 /**
  *
  * @author David Formanek
  */
 @Controller
 @Import({ServiceConfiguration.class})
+@Secured(LIBRARIAN)
 @RequestMapping("/loan")
 public class LoansController {
 

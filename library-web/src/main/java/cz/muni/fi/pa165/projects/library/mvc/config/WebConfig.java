@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.projects.library.mvc.config;
 
+import cz.muni.fi.pa165.projects.library.mvc.config.security.WebSecurityConfig;
 import cz.muni.fi.pa165.projects.library.sampledata.DataConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@Import(DataConfiguration.class)
+@Import({DataConfiguration.class, WebSecurityConfig.class})
 @ComponentScan(basePackages = "cz.muni.fi.pa165.projects.library.mvc.controllers")
 public class WebConfig extends WebMvcConfigurerAdapter {
 

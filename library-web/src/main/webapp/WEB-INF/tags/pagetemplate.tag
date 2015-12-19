@@ -9,6 +9,7 @@
 <%@ attribute name="body" fragment="true" required="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -52,7 +53,14 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Logout (username)</a></li>
+                        <li>
+                            <sec:authorize access="isAnonymous()">
+                                <a href="${pageContext.request.contextPath}/login">Login</a>
+                            </sec:authorize>
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="${pageContext.request.contextPath}/logout">Logout <c:out value="${pageContext.request.userPrincipal.name}"/></a>
+                            </sec:authorize>
+                        </li>
                     </ul>
                 </div>
             </div>

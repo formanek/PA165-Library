@@ -1,22 +1,27 @@
 package cz.muni.fi.pa165.projects.library.mvc.controllers;
 
 import cz.muni.fi.pa165.projects.library.dto.MemberDTO;
-import cz.muni.fi.pa165.projects.library.facade.MemberFacade;
 import cz.muni.fi.pa165.projects.library.dto.NewMemberDTO;
+import cz.muni.fi.pa165.projects.library.facade.MemberFacade;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+
+import static cz.muni.fi.pa165.projects.library.mvc.config.security.UserRoles.LIBRARIAN;
+
 /**
  *
  * @author Milan Skipala
@@ -24,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @Import({ServiceConfiguration.class})
+@Secured(LIBRARIAN)
 @RequestMapping("/member")
 public class MemberController {
     

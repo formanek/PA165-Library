@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.projects.library.facade.BookFacade;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,12 +17,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
+import static cz.muni.fi.pa165.projects.library.mvc.config.security.UserRoles.ADMIN;
+import static cz.muni.fi.pa165.projects.library.mvc.config.security.UserRoles.LIBRARIAN;
+
 /**
  * SpringMVC Controller for book administration
  * @author Jan Mosat
  */
 @Controller
 @Import({ServiceConfiguration.class})
+@Secured(ADMIN)
 @RequestMapping("/book")
 public class BookController {
 
@@ -64,6 +69,7 @@ public class BookController {
      * @param model data to display
      * @return JSP page
      */
+    @Secured({ADMIN, LIBRARIAN})
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         try {
@@ -103,6 +109,7 @@ public class BookController {
      * @param loanable bool if loanable items should be displayed
      * @return JSP page
      */
+    @Secured({ADMIN, LIBRARIAN})
     @RequestMapping()
     public String list(@RequestParam(value="loanable", required = false, defaultValue = "true")
     boolean loanable, Model model) {
