@@ -49,11 +49,18 @@ table a:not(.btn).btn-sm, .table a:not(.btn).btn-sm {
 }
 
 .form-button {
+    line-height: initial; 
     border: none; 
-    padding-left: 0; 
-    padding-right: 0;
+    padding-left: 9px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 9px;
 }
 
 .form-just-with-button {
     display: inline;
+}
+.disabled {
+    background-color: #eeeeee;
+    color: #dddddd;
 }

@@ -91,7 +91,7 @@ public class LoansController {
         }
         returnLoanDTO.setLoanItems(loanItemDTOs);
         loanFacade.returnLoan(returnLoanDTO);
-        redirectAttributes.addFlashAttribute("alert_info", "loan " + id + " returned successfully");
+        redirectAttributes.addFlashAttribute("alert_info", "Loan " + id + " returned successfully");
         return "redirect:" + uriBuilder.path("/loan").toUriString();
     }
 

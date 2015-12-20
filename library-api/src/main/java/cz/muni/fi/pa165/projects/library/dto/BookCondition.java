@@ -7,5 +7,14 @@ package cz.muni.fi.pa165.projects.library.dto;
  */
 public enum BookCondition {
 
-    AS_NEW, VERY_GOOD, GOOD, FAIR, POOR;
+    AS_NEW("As new"), VERY_GOOD("Very good"), GOOD("Good"), FAIR("Fair"), POOR("Poor");
+    
+    private String value;
+    BookCondition(final String value) {
+        this.value = value;
+    }
+    @Override
+    public String toString() {
+        return value;
+    }    
 }

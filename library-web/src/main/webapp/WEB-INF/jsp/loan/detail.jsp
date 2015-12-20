@@ -5,27 +5,41 @@
 
 <my:pagetemplate title="Loan detail">
     <jsp:attribute name="body">
+        
         <h2>Basic info</h2>
-        Loaned <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/><br>
-        <c:choose>
-            <c:when test="${not empty loan.returnTimestamp}">
-                Returned <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/>
-            </c:when>
-            <c:otherwise>
-                Not returned yet (<a href="${pageContext.request.contextPath}/loan/return/${loan.id}">return</a>)
-            </c:otherwise>
-        </c:choose><br>
-        Member <a href="${pageContext.request.contextPath}/member/detail/${loan.member.id}">
-            <c:out value="${loan.member.email}"/>
-        </a>
-        <h2>Loan items</h2>
         <table class="table">
+            <tr>
+                <td class="col-md-2"><b>Loaned</b></td>
+                <td><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.loanTimestamp}"/><br></td>
+            </tr>
+            <tr>
+                <td class="col-md-2"><b>Returned</b></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${not empty loan.returnTimestamp}">
+                            <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${loan.returnTimestamp}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/loan/return/${loan.id}" class="btn btn-default btn-sm">Return</a>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-2"><b>Member</b></td>
+                <td><a href="${pageContext.request.contextPath}/member/detail/${loan.member.id}">
+                        <c:out value="${loan.member.email}"/>
+                </a></td>
+            </tr>
+        </table>
+        
+        <h2>Loan items</h2>
+        <table class="table table-hover table-striped">
             <thead>
                 <tr>
                     <th>Book</th>
-                    <th>condition before</th>
-                    <th>condition after</th>
-                    <th></th>
+                    <th>Condition before</th>
+                    <th>Condition after</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,11 +50,11 @@
                             <c:out value="${item.book.title}"/>
                         </a>
                     </td>
-                    <td>${item.conditionBefore}</td>
+                    <td>${item.conditionBefore.toString()}</td>
                     <td>
                 <c:choose>
                     <c:when test="${not empty item.conditionAfter}">
-                        ${item.conditionAfter}
+                        ${item.conditionAfter.toString()}
                     </c:when>
                     <c:otherwise>
                         (not set)

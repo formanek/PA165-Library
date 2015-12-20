@@ -7,14 +7,14 @@
 <my:pagetemplate title="Loan books">
     <jsp:attribute name="body">
 
-        <h3>Loan books for member
+        <h3>Loan books to member
             <a href="${pageContext.request.contextPath}/member/detail/${member.id}">
                 <c:out value="${member.givenName}"/>&nbsp;<c:out value="${member.surname}"/>
             </a>
         </h3>
 
         <form action="${pageContext.request.contextPath}/loan/new/${member.id}" method="post">
-
+            <br>
             Available books:
             <table class="table">
                 <thead>
@@ -37,10 +37,10 @@
 
                             <%-- Book Condition --%>
                             <td>
-                                <select name="condition${book.id}">
+                                <select name="condition${book.id}" disabled class="disabled">
                                     <c:forEach items="${conditions}" var="condition">
                                         <option value="${condition}">
-                                                ${condition}
+                                                ${condition.toString()}
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -48,7 +48,10 @@
 
                             <%-- Want to loan - checkbox --%>
                             <td>
-                                <input type="checkbox" name="requiredBooks" value="${book.id}">
+                                <input type="checkbox" name="requiredBooks" value="${book.id}" id="requiredBooks${book.id}"
+                                       onClick="$('[name=\'condition${book.id}\']').toggleClass('disabled');
+                                           $('#requiredBooks${book.id}').prop('checked') ? $('[name=\'condition${book.id}\']').prop('disabled', false)
+                                            : $('[name=\'condition${book.id}\']').prop('disabled', true);">
                             </td>
                         </tr>
                     </c:forEach>

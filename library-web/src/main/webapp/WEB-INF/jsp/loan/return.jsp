@@ -13,9 +13,8 @@
                         <thead>
                             <tr>
                                 <th>Book</th>
-                                <th>condition before</th>
-                                <th>condition after</th>
-                                <th></th>
+                                <th>Condition before</th>
+                                <th>Condition after</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,17 +25,18 @@
                                             <c:out value="${item.book.title}"/>
                                         </a>
                                     </td>
-                                    <td>${item.conditionBefore}</td>
+                                    <td>${item.conditionBefore.toString()}</td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${not empty item.conditionAfter}">
-                                                error: already set to ${item.conditionAfter}
+                                                Error: already set to ${item.conditionAfter.toString()}
                                             </c:when>
                                             <c:otherwise>
                                                 <select name="condition${item.book.id}">
                                                     <c:forEach items="${conditions}" var="condition">
                                                         <option value="${condition}">
-                                                            ${condition}
+                                                            
+                                                            ${condition.toString()}
                                                         </option>
                                                     </c:forEach>
                                                 </select>
@@ -47,7 +47,10 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <button type="submit">Return loan</button>
+                    <span onclick="history.go(-1)" class="btn btn-default">
+                        Back
+                    </span>
+                    <button type="submit" class="btn btn-primary">Return loan</button>
                 </form>
             </c:when>
             <c:otherwise>

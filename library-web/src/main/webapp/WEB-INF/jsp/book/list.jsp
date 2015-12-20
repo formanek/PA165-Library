@@ -47,15 +47,13 @@
                     <td class="col-md-3"><c:out value="${book.title}"/></td>
                     <td class="col-md-2 btn-group btn-group-justified">
                         <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn-sm btn-default">Detail</a>
-                    <%--</td>
-                    <td class="col-md-1 col-lg-1">--%>
-                        <form class="btn-sm ${empty param.loanable || param.loanable ? 'btn-danger' : 'btn-success'} form-just-with-button" method="post" action="${pageContext.request.contextPath}/book/loanability/${book.id}?loanable=${book.loanable}">
+                        <form class="btn-sm form-just-with-button" method="post" action="${pageContext.request.contextPath}/book/loanability/${book.id}?loanable=${book.loanable}">
                             <c:choose>
                                 <c:when test="${empty param.loanable || param.loanable}">
-                                    <button type="submit" class="btn-danger form-button">Remove</button>
+                                    <button type="submit" class="btn-sm btn-danger form-button">Remove</button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="submit" class="btn-success form-button">Return</button>
+                                    <button type="submit" class="btn-sm btn-success form-button">Return</button>
                                 </c:otherwise>
                             </c:choose>
                         </form>
