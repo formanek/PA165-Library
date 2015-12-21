@@ -31,7 +31,8 @@
         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/login">
             <fieldset>
                 <legend>Please login to start using the system.</legend>
-                <p>List of users</p>
+                <h4>List of users</h4>
+                <p><a href="https://github.com/formanek/PA165-Library/wiki#use-case-diagram" target="_blank">Here</a> you can see roles and permissions</p>
                 <table class="table table-striped">
                     <thead>
                         <tr>
