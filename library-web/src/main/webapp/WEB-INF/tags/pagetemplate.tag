@@ -47,9 +47,13 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="${pageContext.request.requestURI.contains("/member") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/member">Members</a></li>
+                        <sec:authorize access="hasAnyRole('ROLE_LIBRARIAN','ROLE_ANONYMOUS')">
+                            <li class="${pageContext.request.requestURI.contains("/member") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/member">Members</a></li>
+                        </sec:authorize>
                         <li class="${pageContext.request.requestURI.contains("/book") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/book">Books</a></li>
-                        <li class="${pageContext.request.requestURI.contains("/loan") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/loan">Loans</a></li>
+                        <sec:authorize access="hasAnyRole('ROLE_LIBRARIAN','ROLE_ANONYMOUS')">
+                            <li class="${pageContext.request.requestURI.contains("/loan") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/loan">Loans</a></li>
+                        </sec:authorize>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
