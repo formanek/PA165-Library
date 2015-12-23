@@ -45,10 +45,10 @@
             <tbody>
             <c:forEach items="${books}" var="book">
                 <tr>
-                    <td class="col-md-2"><c:out value="${book.isbn}"/></td>
-                    <td class="col-md-3"><c:out value="${book.author}"/></td>
-                    <td class="col-md-3"><c:out value="${book.title}"/></td>
-                    <td class="col-md-2 btn-group btn-group-justified">
+                    <td class="col-md-2 col-sm-2 col-xs-2"><c:out value="${book.isbn}"/></td>
+                    <td class="col-md-3 col-sm-3 col-xs-5"><c:out value="${book.author}"/></td>
+                    <td class="col-md-3 col-sm-4 col-xs-6"><c:out value="${book.title}"/></td>
+                    <td class="col-md-2 col-sm-3 col-xs-1 btn-group btn-group-justified">
                         <a href="${pageContext.request.contextPath}/book/detail/${book.id}" class="btn-sm btn-default">Detail</a>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <form class="btn-sm form-just-with-button" method="post" action="${pageContext.request.contextPath}/book/loanability/${book.id}?loanable=${book.loanable}">

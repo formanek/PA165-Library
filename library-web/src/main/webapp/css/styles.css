@@ -64,3 +64,7 @@ table a:not(.btn).btn-sm, .table a:not(.btn).btn-sm {
     background-color: #eeeeee;
     color: #dddddd;
 }
+
+p {
+    max-width: 800px;
+}

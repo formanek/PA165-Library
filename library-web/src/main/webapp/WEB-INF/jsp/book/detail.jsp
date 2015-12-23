@@ -14,11 +14,11 @@
             </tr>
             <tr>
                 <td class="col-md-2"><b>Isbn</b></td>
-                <td>${book.isbn}</td>
+                <td><c:out value="${book.isbn}"/></td>
             </tr>
             <tr>
                 <td class="col-md-2"><b>Author</b></td>
-                <td>${book.author}</td>
+                <td><c:out value="${book.author}"/></td>
             </tr>
             <tr>
                 <td class="col-md-2"><b>Title</b></td>

@@ -70,7 +70,7 @@ public class LoansController {
     }
     
     @RequestMapping(value = "/return/{id}", method = RequestMethod.POST)
-    public String processReturn(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
+    public String processReturn(@PathVariable long id, UriComponentsBuilder uriBuilder,
             RedirectAttributes redirectAttributes, HttpServletRequest req) {
         Set<LoanItemDTO> loanItems = loanFacade.findLoanById(id).getLoanItems();
         ReturnLoanDTO returnLoanDTO = new ReturnLoanDTO();
