@@ -31,7 +31,7 @@ public class Member {
 
     @NotNull
     @Column(nullable = false, unique = true)
-    @Pattern(regexp = ".+@.+\\...+")
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9]+[a-zA-Z0-9-]*\\.)+[a-zA-Z0-9]+$")
     private String email;
 
     @OneToMany(orphanRemoval = true, mappedBy = "member")

@@ -18,7 +18,7 @@ public class MemberDTO {
     private String givenName;
     @NotBlank(message = "Surame has to be filled in")
     private String surname;
-    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Valid email address has to be filled in")
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9]+[a-zA-Z0-9-]*\\.)+[a-zA-Z0-9]+$", message = "Valid email address has to be filled in")
     private String email;
 
     public Long getId() {
