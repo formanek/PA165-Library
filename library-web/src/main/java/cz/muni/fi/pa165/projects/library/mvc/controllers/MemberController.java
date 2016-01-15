@@ -71,7 +71,7 @@ public class MemberController {
         //create product
         Long id = memberFacade.registerMember(formBean);
         //report success
-        redirectAttributes.addFlashAttribute("alert_info", "Member " + id + " was created");
+        redirectAttributes.addFlashAttribute("alert_info", "Member " + formBean.getGivenName() + " " + formBean.getSurname() + " was created");
         return "redirect:" + uriBuilder.path("/member/list").toUriString();
     }
     

@@ -59,7 +59,7 @@ public class BookController {
             return "book/new";
         }
         Long id = bookFacade.addBook(formBean);
-        redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was created");
+        redirectAttributes.addFlashAttribute("alert_info", "Book " + formBean.getTitle() + " was created");
         return "redirect:" + uriBuilder.path("/book").toUriString();
     }
 
@@ -94,10 +94,10 @@ public class BookController {
     boolean loanable, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         BookDTO book = bookFacade.findBookById(id);
         if (loanable) {
-            redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was marked as not loanable.");
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was marked as not loanable.");
         }
         else {
-            redirectAttributes.addFlashAttribute("alert_info", "Book " + id + " was marked as loanable.");
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was marked as loanable.");
         }
         bookFacade.changeLoanability(id, !book.getLoanable());
         return "redirect:" + uriBuilder.path("/book").queryParam("loanable",loanable).toUriString();
