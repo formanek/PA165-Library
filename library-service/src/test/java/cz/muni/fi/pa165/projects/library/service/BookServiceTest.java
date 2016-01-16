@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.projects.library.persistence.entity.Book;
 import cz.muni.fi.pa165.projects.library.persistence.entity.Loan;
 import cz.muni.fi.pa165.projects.library.persistence.entity.LoanItem;
 import cz.muni.fi.pa165.projects.library.service.config.ServiceConfiguration;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,10 +39,8 @@ public class BookServiceTest extends AbstractTestNGSpringContextTests {
     @Mock
     private LoanService loanService;
     
-    @Mock
     private Loan loan;
     
-    @Mock
     private LoanItem loanItem;
     
     @Inject
@@ -151,12 +148,14 @@ public class BookServiceTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void isBookAvailableBasicTest() {
-        when(loanItem.getBook()).thenReturn(book1);
+        loanItem = new LoanItem();
+        loan = new Loan();
+        loanItem.setBook(book1);
+        
         Set<LoanItem> items = new HashSet<>();
         items.add(loanItem);
         
-        when(loan.getReturnTimestamp()).thenReturn(null);
-        when(loan.getLoanItems()).thenReturn(items);
+        loan.setLoanItems(items);
         
         List<Loan> list = new ArrayList<>();
         list.add(loan);

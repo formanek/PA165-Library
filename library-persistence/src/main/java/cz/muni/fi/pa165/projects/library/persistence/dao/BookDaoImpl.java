@@ -8,6 +8,11 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  * Data access object which provides access to Book entity
@@ -47,6 +52,11 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> find(Book book) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+        Root<Book> b = cq.from(Book.class);
+        ArrayList<Predicate> preds = new ArrayList();
+        
         if (book.getId() != null) {
             if (book.getAuthor() != null || book.getIsbn() != null || book.getTitle() != null) {
                 throw new IllegalArgumentException("When Id is not null other fields have to be null");
@@ -54,53 +64,22 @@ public class BookDaoImpl implements BookDao {
             List<Book> l = new ArrayList<>();
             l.add(findById(book.getId()));
             return l;
-        } else if (book.getAuthor() != null && book.getIsbn() == null && book.getTitle() == null) {
-            checkString(book.getAuthor(), "Author");
-            return em.createQuery("select b from Book b where b.author = :author", Book.class)
-                    .setParameter("author", book.getAuthor())
-                    .getResultList();
-        } else if (book.getAuthor() == null && book.getIsbn() != null && book.getTitle() == null) {
-            checkString(book.getIsbn(), "ISBN");
-            return em.createQuery("select b from Book b where b.isbn = :isbn", Book.class)
-                    .setParameter("isbn", book.getIsbn())
-                    .getResultList();
-        } else if (book.getAuthor() == null && book.getIsbn() == null && book.getTitle() != null) {
-            checkString(book.getTitle(), "Title");
-            return em.createQuery("select b from Book b where b.title = :title", Book.class)
-                    .setParameter("title", book.getTitle())
-                    .getResultList();
-        } else if (book.getAuthor() != null && book.getIsbn() != null && book.getTitle() == null) {
-            checkString(book.getAuthor(), "Author");
-            checkString(book.getIsbn(), "ISBN");
-            return em.createQuery("select b from Book b where b.author = :author AND b.isbn = :isbn", Book.class)
-                    .setParameter("author", book.getAuthor())
-                    .setParameter("isbn", book.getIsbn())
-                    .getResultList();
-        } else if (book.getAuthor() != null && book.getIsbn() == null && book.getTitle() != null) {
-            checkString(book.getAuthor(), "Author");
-            checkString(book.getTitle(), "Title");
-            return em.createQuery("select b from Book b where b.author = :author AND b.title = :title", Book.class)
-                    .setParameter("author", book.getAuthor())
-                    .setParameter("title", book.getTitle())
-                    .getResultList();
-        } else if (book.getAuthor() == null && book.getIsbn() != null && book.getTitle() != null) {
-            checkString(book.getIsbn(), "ISBN");
-            checkString(book.getTitle(), "Title");
-            return em.createQuery("select b from Book b where b.isbn = :isbn AND b.title = :title", Book.class)
-                    .setParameter("isbn", book.getIsbn())
-                    .setParameter("title", book.getTitle())
-                    .getResultList();
-        } else if (book.getAuthor() != null && book.getIsbn() != null && book.getTitle() != null) {
-            checkString(book.getAuthor(), "Author");
-            checkString(book.getIsbn(), "ISBN");
-            checkString(book.getTitle(), "Title");
-            return em.createQuery("select b from Book b where b.author = :author AND b.isbn = :isbn AND b.title = :title", Book.class)
-                    .setParameter("author", book.getAuthor())
-                    .setParameter("isbn", book.getIsbn())
-                    .setParameter("title", book.getTitle())
-                    .getResultList();
         } else {
-            return new ArrayList<>();
+            if (book.getAuthor() != null){
+                checkString(book.getAuthor(), "Author");
+                preds.add(cb.equal(b.get("author"),book.getAuthor()));
+            }
+            if (book.getIsbn() != null){
+                checkString(book.getIsbn(), "ISBN");
+                preds.add(cb.equal(b.get("isbn"),book.getIsbn()));
+            }
+            if (book.getTitle() != null){
+                checkString(book.getTitle(), "Title");
+                preds.add(cb.equal(b.get("title"),book.getTitle()));
+            }
+            cq.select(b).where(cb.and(preds.toArray(new Predicate[preds.size()])));
+            TypedQuery<Book> tq= em.createQuery(cq);
+            return tq.getResultList();
         }
 
     }
